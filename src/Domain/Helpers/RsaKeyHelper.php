@@ -1,0 +1,54 @@
+<?php
+
+namespace PhpBundle\Kpi\Domain\Helpers;
+
+use PhpBundle\Kpi\Domain\Entities\CertificateSubjectEntity;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
+use PhpLab\Core\Helpers\StringHelper;
+
+class RsaKeyHelper
+{
+
+    public static function keyToLine($key) {
+        $key = preg_replace('/-----([^-]+)-----/i', '', $key);
+        $key = preg_replace('/\s+/i', '', $key);
+        return $key;
+    }
+
+    public static function pemToBin($key) {
+        $key = self::keyToLine($key);
+        $key = base64_decode($key);
+        return $key;
+    }
+
+    public static function binToPem($key, $tag) {
+        $key = base64_encode($key);
+        $key = self::base64ToPem($key, $tag);
+        return $key;
+    }
+
+    public static function base64ToPem($key, $tag) {
+        //$key = chunk_split($key);
+        $key = wordwrap($key, 64, PHP_EOL, true);
+        $tag = mb_strtoupper($tag);
+        $key = "-----BEGIN $tag-----\n$key\n-----END $tag-----";
+        return $key;
+    }
+
+    public static function subjectArrayToJson(array $subjectArray): string
+    {
+        $subjectArray['publicKey'] = self::keyToLine($subjectArray['publicKey']);
+        ksort($subjectArray);
+
+        $arr = [];
+        foreach ($subjectArray as $key => $value) {
+            $arr[] = $key . ':' . $value;
+        }
+        $subjectJson = implode('|', $arr);
+
+        //$subjectJson = json_encode($subjectArray);
+
+        return $subjectJson;
+    }
+
+}
