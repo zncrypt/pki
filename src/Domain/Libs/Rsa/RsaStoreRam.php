@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Libs\Rsa;
+namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
-use PhpLab\Core\Exceptions\NotFoundException;
+use ZnCore\Base\Exceptions\NotFoundException;
 
 class RsaStoreRam extends BaseRsaStore
 {

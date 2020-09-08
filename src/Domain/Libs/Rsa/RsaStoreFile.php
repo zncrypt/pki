@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Libs\Rsa;
+namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
-use PhpBundle\Crypt\Domain\Libs\Encoders\EncoderInterface;
-use PhpLab\Core\Exceptions\NotFoundException;
-use PhpLab\Core\Helpers\StringHelper;
-use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
+use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
+use ZnCore\Base\Exceptions\NotFoundException;
+use ZnCore\Base\Helpers\StringHelper;
+use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 class RsaStoreFile extends BaseRsaStore implements RsaStoreInterface
 {

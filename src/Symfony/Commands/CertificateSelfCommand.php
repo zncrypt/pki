@@ -1,28 +1,28 @@
 <?php
 
-namespace PhpBundle\Kpi\Symfony\Commands;
+namespace ZnCrypt\Pki\Symfony\Commands;
 
 use Illuminate\Container\Container;
-use PhpBundle\Kpi\Domain\Entities\CertificateEntity;
-use PhpBundle\Crypt\Domain\Entities\CertificateInfoEntity;
-use PhpBundle\Kpi\Domain\Entities\CertificateSubjectEntity;
-use PhpBundle\Crypt\Domain\Enums\HashAlgoEnum;
-use PhpBundle\Kpi\Domain\Libs\Rsa\Rsa;
-use PhpBundle\Kpi\Domain\Libs\Rsa\RsaStoreFile;
-use PhpBundle\Kpi\Domain\Services\CertificateService;
-use PhpLab\Core\Domain\Helpers\EntityHelper;
-use PhpLab\Core\Enums\Measure\TimeEnum;
-use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
-use PhpLab\Dev\Generator\Domain\Dto\BuildDto;
-use PhpLab\Dev\Generator\Domain\Interfaces\Services\DomainServiceInterface;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\DomainNameInputScenario;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\DomainNamespaceInputScenario;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\DriverInputScenario;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\EntityAttributesInputScenario;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\IsCrudRepositoryInputScenario;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\IsCrudServiceInputScenario;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\NameInputScenario;
-use PhpLab\Dev\Generator\Domain\Scenarios\Input\TypeInputScenario;
+use ZnCrypt\Pki\Domain\Entities\CertificateEntity;
+use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
+use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
+use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
+use ZnCrypt\Pki\Domain\Libs\Rsa\Rsa;
+use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
+use ZnCrypt\Pki\Domain\Services\CertificateService;
+use ZnCore\Base\Domain\Helpers\EntityHelper;
+use ZnCore\Base\Enums\Measure\TimeEnum;
+use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnTool\Dev\Generator\Domain\Dto\BuildDto;
+use ZnTool\Dev\Generator\Domain\Interfaces\Services\DomainServiceInterface;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\DomainNameInputScenario;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\DomainNamespaceInputScenario;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\DriverInputScenario;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\EntityAttributesInputScenario;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\IsCrudRepositoryInputScenario;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\IsCrudServiceInputScenario;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\NameInputScenario;
+use ZnTool\Dev\Generator\Domain\Scenarios\Input\TypeInputScenario;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

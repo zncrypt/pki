@@ -1,21 +1,21 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Services;
+namespace ZnCrypt\Pki\Domain\Services;
 
-use PhpBundle\Kpi\Domain\Entities\CertificateEntity;
-use PhpBundle\Crypt\Domain\Entities\CertificateInfoEntity;
-use PhpBundle\Kpi\Domain\Entities\CertificateSubjectEntity;
-use PhpBundle\Kpi\Domain\Entities\RsaKeyEntity;
-use PhpBundle\Kpi\Domain\Entities\SignatureEntity;
-use PhpBundle\Crypt\Domain\Enums\HashAlgoEnum;
-use PhpBundle\Crypt\Domain\Interfaces\Services\PasswordServiceInterface;
-use PhpBundle\Kpi\Domain\Libs\Rsa\Rsa;
-use PhpBundle\Kpi\Domain\Helpers\RsaKeyHelper;
-use PhpBundle\Kpi\Domain\Libs\Rsa\RsaStoreFile;
-use PhpBundle\Kpi\Domain\Libs\Rsa\RsaStoreRam;
-use PhpLab\Core\Domain\Helpers\EntityHelper;
-use PhpLab\Core\Legacy\Yii\Base\Security;
-use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
+use ZnCrypt\Pki\Domain\Entities\CertificateEntity;
+use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
+use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
+use ZnCrypt\Pki\Domain\Entities\RsaKeyEntity;
+use ZnCrypt\Pki\Domain\Entities\SignatureEntity;
+use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
+use ZnCrypt\Base\Domain\Interfaces\Services\PasswordServiceInterface;
+use ZnCrypt\Pki\Domain\Libs\Rsa\Rsa;
+use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
+use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
+use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreRam;
+use ZnCore\Base\Domain\Helpers\EntityHelper;
+use ZnCore\Base\Legacy\Yii\Base\Security;
+use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 
 class CertificateService
 {

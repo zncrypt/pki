@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Entities;
+namespace ZnCrypt\Pki\Domain\Entities;
 
 class SignatureEntity
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Enums;
+namespace ZnCrypt\Pki\Domain\Enums;
 
-use PhpLab\Core\Domain\Base\BaseEnum;
+use ZnCore\Base\Domain\Base\BaseEnum;
 
 class CertificateFormatEnum extends BaseEnum
 {

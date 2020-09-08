@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Helpers;
+namespace ZnCrypt\Pki\Domain\Helpers;
 
 use php7rails\app\domain\helpers\EnvService;
-use PhpBundle\Jwt\Domain\Entities\KeyEntity;
-use PhpBundle\Crypt\Domain\Enums\EncryptAlgorithmEnum;
-use PhpBundle\Crypt\Domain\Enums\RsaBitsEnum;
+use ZnCrypt\Jwt\Domain\Entities\KeyEntity;
+use ZnCrypt\Base\Domain\Enums\EncryptAlgorithmEnum;
+use ZnCrypt\Base\Domain\Enums\RsaBitsEnum;
 
 class RsaHelper
 {

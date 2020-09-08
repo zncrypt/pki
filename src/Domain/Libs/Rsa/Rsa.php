@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Libs\Rsa;
+namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
-use PhpBundle\Kpi\Domain\Entities\RsaKeyEntity;
-use PhpBundle\Kpi\Domain\Entities\SignatureEntity;
-use PhpBundle\Crypt\Domain\Enums\HashAlgoEnum;
-use PhpBundle\Kpi\Domain\Enums\RsaKeyFormatEnum;
-use PhpBundle\Crypt\Domain\Libs\Encoders\EncoderInterface;
-use PhpBundle\Kpi\Domain\Helpers\RsaKeyHelper;
+use ZnCrypt\Pki\Domain\Entities\RsaKeyEntity;
+use ZnCrypt\Pki\Domain\Entities\SignatureEntity;
+use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
+use ZnCrypt\Pki\Domain\Enums\RsaKeyFormatEnum;
+use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
+use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
 
 class Rsa implements EncoderInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Helpers;
+namespace ZnCrypt\Pki\Domain\Helpers;
 
-use PhpBundle\Kpi\Domain\Entities\CertificateSubjectEntity;
-use PhpLab\Core\Domain\Helpers\EntityHelper;
-use PhpLab\Core\Helpers\StringHelper;
+use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
+use ZnCore\Base\Domain\Helpers\EntityHelper;
+use ZnCore\Base\Helpers\StringHelper;
 
 class RsaKeyHelper
 {

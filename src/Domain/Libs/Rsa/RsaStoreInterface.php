@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Libs\Rsa;
+namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
-use PhpBundle\Kpi\Domain\Enums\CertificateFormatEnum;
-use PhpBundle\Kpi\Domain\Enums\RsaKeyFormatEnum;
+use ZnCrypt\Pki\Domain\Enums\CertificateFormatEnum;
+use ZnCrypt\Pki\Domain\Enums\RsaKeyFormatEnum;
 
 interface RsaStoreInterface
 {

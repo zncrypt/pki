@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Entities;
+namespace ZnCrypt\Pki\Domain\Entities;
 
-use PhpBundle\Kpi\Domain\Helpers\RsaKeyHelper;
+use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
 
 class CertificateSubjectEntity
 {

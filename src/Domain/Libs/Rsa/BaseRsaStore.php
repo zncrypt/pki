@@ -1,15 +1,15 @@
 <?php
 
-namespace PhpBundle\Kpi\Domain\Libs\Rsa;
+namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
-use PhpBundle\Kpi\Domain\Entities\CertificateSubjectEntity;
-use PhpBundle\Kpi\Domain\Enums\CertificateFormatEnum;
-use PhpBundle\Kpi\Domain\Enums\RsaKeyFormatEnum;
-use PhpBundle\Crypt\Domain\Libs\Encoders\EncoderInterface;
-use PhpBundle\Kpi\Domain\Helpers\RsaKeyHelper;
-use PhpLab\Core\Domain\Helpers\EntityHelper;
-use PhpLab\Core\Helpers\StringHelper;
-use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
+use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
+use ZnCrypt\Pki\Domain\Enums\CertificateFormatEnum;
+use ZnCrypt\Pki\Domain\Enums\RsaKeyFormatEnum;
+use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
+use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
+use ZnCore\Base\Domain\Helpers\EntityHelper;
+use ZnCore\Base\Helpers\StringHelper;
+use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 
 abstract class BaseRsaStore implements RsaStoreInterface
 {

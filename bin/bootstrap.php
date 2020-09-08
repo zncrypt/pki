@@ -3,15 +3,15 @@
 
 use Illuminate\Container\Container;
 use Symfony\Component\Console\Application;
-use PhpLab\Core\Console\Helpers\CommandHelper;
-use PhpBundle\Kpi\Domain\Libs\Rsa\RsaStoreFile;
-use PhpLab\Core\Enums\Measure\TimeEnum;
+use ZnCore\Base\Console\Helpers\CommandHelper;
+use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
+use ZnCore\Base\Enums\Measure\TimeEnum;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\HttpFoundation\Request;
-use PhpLab\Rest\Helpers\RestApiControllerHelper;
-use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
+use ZnLib\Rest\Helpers\RestApiControllerHelper;
+use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 /**
  * @var Application $application
@@ -36,5 +36,5 @@ $container->bind(AbstractAdapter::class, function () {
 }, true);
 
 CommandHelper::registerFromNamespaceList([
-    'PhpBundle\Kpi\Symfony\Commands',
+    'ZnCrypt\Pki\Symfony\Commands',
 ], $container);
