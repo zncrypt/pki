@@ -12,7 +12,7 @@ use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
 use ZnCrypt\Pki\Domain\Services\CertificateService;
 use ZnCrypt\Pki\Domain\Services\RsaService;
 use ZnCore\Base\Console\Question\ChoiceQuestion;
-use ZnCore\Base\Domain\Helpers\EntityHelper;
+use ZnCore\Domain\Helpers\EntityHelper;
 use ZnCore\Base\Enums\Measure\TimeEnum;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnTool\Dev\Generator\Domain\Dto\BuildDto;
