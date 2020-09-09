@@ -14,8 +14,6 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"PhpBundle\\Kpi\\": "src",
-			"PhpBundle\\Kpi\\Tests\\": "tests",
 			"ZnCrypt\\Pki\\": "src",
 			"ZnCrypt\\Pki\\Tests\\": "tests"
 		}
