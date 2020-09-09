@@ -2,20 +2,16 @@
 
 namespace ZnCrypt\Pki\Domain\Services;
 
-use ZnCrypt\Pki\Domain\Entities\CertificateEntity;
+use ZnCore\Base\Domain\Helpers\EntityHelper;
 use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
+use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
 use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
 use ZnCrypt\Pki\Domain\Entities\RsaKeyEntity;
 use ZnCrypt\Pki\Domain\Entities\SignatureEntity;
-use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
-use ZnCrypt\Base\Domain\Interfaces\Services\PasswordServiceInterface;
-use ZnCrypt\Pki\Domain\Libs\Rsa\Rsa;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
+use ZnCrypt\Pki\Domain\Libs\Rsa\Rsa;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreRam;
-use ZnCore\Base\Domain\Helpers\EntityHelper;
-use ZnCore\Base\Legacy\Yii\Base\Security;
-use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 
 class CertificateService
 {
@@ -36,7 +32,7 @@ class CertificateService
             ],
         ];
         //dd([$subjectEntity->getPublicKey() == $issuerStore->getPublicKey()]);
-        if($subjectEntity->getPublicKey() == $issuerStore->getPublicKey()) {
+        if ($subjectEntity->getPublicKey() == $issuerStore->getPublicKey()) {
             $arr['issuer'] = 'self';
         } else {
             $issuerCert = $issuerStore->getCertificate();
@@ -61,7 +57,7 @@ class CertificateService
         //dd($certArray);
         $subjectArray = $certArray['subject'];
         $subjectJson = RsaKeyHelper::subjectArrayToJson($subjectArray);
-        if($certArray['issuer'] == 'self' || $certArray['issuer'] == null) {
+        if ($certArray['issuer'] == 'self' || $certArray['issuer'] == null) {
             $issuerPublicKey = $certArray['subject']['publicKey'];
         } else {
             $issuerPublicKey = $certArray['issuer']['subject']['publicKey'];
@@ -77,9 +73,9 @@ class CertificateService
         $signatureEntity->setAlgorithm($certArray['signature']['algorithm']);
         $isVerify = $rsa->verify($subjectJson, $signatureEntity);
         //dd($subjectJson);
-        if($isVerify) {
+        if ($isVerify) {
             $diff = intval($certArray['subject']['expireAt']) - time();
-            if($diff < 1) {
+            if ($diff < 1) {
                 return false;
             }
         }
