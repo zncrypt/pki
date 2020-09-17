@@ -3,7 +3,7 @@
 
 use Illuminate\Container\Container;
 use Symfony\Component\Console\Application;
-use ZnCore\Base\Console\Helpers\CommandHelper;
+use ZnLib\Console\Symfony4\Helpers\CommandHelper;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
 use ZnCore\Base\Enums\Measure\TimeEnum;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
