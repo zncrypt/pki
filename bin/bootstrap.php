@@ -36,5 +36,5 @@ $container->bind(AbstractAdapter::class, function () {
 }, true);
 
 CommandHelper::registerFromNamespaceList([
-    'ZnCrypt\Pki\Symfony\Commands',
+    'ZnCrypt\Pki\Symfony4\Commands',
 ], $container);

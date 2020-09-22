@@ -1,6 +1,6 @@
 <?php
 
-namespace ZnCrypt\Pki\Symfony\Commands;
+namespace ZnCrypt\Pki\Symfony4\Commands;
 
 use Illuminate\Container\Container;
 use ZnCrypt\Pki\Domain\Entities\CertificateEntity;

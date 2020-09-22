@@ -1,6 +1,6 @@
 <?php
 
-namespace ZnCrypt\Pki\Symfony\Commands;
+namespace ZnCrypt\Pki\Symfony4\Commands;
 
 use ZnTool\Dev\Generator\Domain\Dto\BuildDto;
 use ZnTool\Dev\Generator\Domain\Scenarios\Input\BaseInputScenario;
