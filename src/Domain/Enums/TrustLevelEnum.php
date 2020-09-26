@@ -2,9 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Enums;
 
-use ZnCore\Domain\Base\BaseEnum;
-
-class TrustLevelEnum extends BaseEnum
+class TrustLevelEnum
 {
 
     const DIGITAL = 100;

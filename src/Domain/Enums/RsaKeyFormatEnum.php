@@ -2,9 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Enums;
 
-use ZnCore\Domain\Base\BaseEnum;
-
-class RsaKeyFormatEnum extends BaseEnum
+class RsaKeyFormatEnum
 {
 
     const TEXT = 'RSA_FORMAT_TEXT';

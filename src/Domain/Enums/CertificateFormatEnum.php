@@ -2,9 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Enums;
 
-use ZnCore\Domain\Base\BaseEnum;
-
-class CertificateFormatEnum extends BaseEnum
+class CertificateFormatEnum
 {
 
     const JSON = 'FORMAT_FORMAT_JSON';
