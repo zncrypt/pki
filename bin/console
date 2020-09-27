@@ -5,11 +5,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 use Symfony\Component\Console\Application;
-use ZnCore\Base\Libs\Env\DotEnvHelper;
+use ZnCore\Base\Libs\DotEnv\DotEnv;
 use Illuminate\Container\Container;
 
 require __DIR__ . '/../../../autoload.php';
-DotEnvHelper::init();
+DotEnv::init();
 require __DIR__ . '/bootstrap.php';
 
 $container = Container::getInstance();
