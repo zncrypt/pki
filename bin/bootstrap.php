@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Container\Container;
 use Symfony\Component\Console\Application;
 use ZnLib\Console\Symfony4\Helpers\CommandHelper;
@@ -17,12 +16,6 @@ use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
  * @var Application $application
  * @var Container $container
  */
-
-$container = Container::getInstance();
-
-// --- Application ---
-
-$container->bind(Application::class, Application::class, true);
 
 // --- Generator ---
 
