@@ -10,7 +10,8 @@
 	],
 	"minimum-stability": "dev",
 	"require": {
-		"zncrypt/base": "v0.*"
+		"phpseclib/phpseclib": "2.*",
+		"zncrypt/base": "v0.0.*"
 	},
 	"autoload": {
 		"psr-4": {
