@@ -77,7 +77,7 @@ class X509Helper
         $personEntity->setSurname($person['surname']);
         $personEntity->setPatronymic($person['givenName']);
         $personEntity->setCode($person['code']);
-        $personEntity->setEmail($person['emailAddress']);
+        $personEntity->setEmail($person['emailAddress'] ?: '');
         return $personEntity;
     }
 
