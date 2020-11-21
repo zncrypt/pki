@@ -32,6 +32,7 @@ class QrHelper
 
     public static function unZip($xmlDir, $data)
     {
+        FileHelper::createDirectory($xmlDir);
         $zipFile = $xmlDir . '/zip.zip';
         FileHelper::save($zipFile, $data);
         $zip = new \ZipArchive();
@@ -43,6 +44,8 @@ class QrHelper
             throw new Exception('Zip not opened!');
         }
         $xmlContent = FileHelper::load($xmlDir . '/one');
+        unlink($zipFile);
+        unlink($xmlDir . '/one');
         return $xmlContent;
     }
 }
