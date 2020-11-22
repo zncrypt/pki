@@ -20,10 +20,12 @@ function XML2Array(SimpleXMLElement $parent)
 class XmlHelper
 {
 
-    public static function parseXml(string $ss): array
+    public static function parseXml(string $ss, string $nameSpace = ''): array
     {
-        $xml = simplexml_load_string($ss);
+//        dd($ss);
+        $xml = simplexml_load_string($ss, "SimpleXMLElement", 0, $nameSpace);
         $array = XML2Array($xml);
+//        dd($array);
         $array = array($xml->getName() => $array);
         return $array;
     }

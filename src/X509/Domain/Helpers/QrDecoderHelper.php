@@ -5,9 +5,24 @@ namespace ZnCrypt\Pki\X509\Domain\Helpers;
 use Illuminate\Support\Collection;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
-class QrHelper
+class QrDecoderHelper
 {
-    public static function extract(array $qrs): Collection
+
+    public static function extractData(array $qrs, string $nameSpace = '')
+    {
+        $collection = self::extract($qrs);
+        $data = self::collectionToBin($collection);
+        $xmlContent = self::unZip($data);
+//        dd($xmlContent);
+        $xml = new \Symfony\Component\Serializer\Encoder\XmlEncoder();
+        return $xml->decode($xmlContent, 'xml');
+//        dd($ssss);
+//        $xmlArray = \ZnCrypt\Pki\X509\Domain\Helpers\XmlHelper::parseXml($xmlContent, $nameSpace);
+//        $xmlArray = $xmlArray['data'];
+//        return $xmlArray;
+    }
+
+    private static function extract(array $qrs): Collection
     {
         $collection = new Collection();
         foreach ($qrs as $xmlContent) {
@@ -20,7 +35,7 @@ class QrHelper
         return $collection;
     }
 
-    public static function collectionToBin(Collection $collection): string
+    private static function collectionToBin(Collection $collection): string
     {
         $data = '';
         foreach ($collection as $item) {
@@ -30,19 +45,18 @@ class QrHelper
         return $data;
     }
 
-    public static function unZip($xmlDir, $data)
+    private static function unZip($data)
     {
-        $zipFile = $xmlDir . '/zip.zip';
+        $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
         FileHelper::save($zipFile, $data);
         $zip = new \ZipArchive();
         $res = $zip->open($zipFile);
         if ($res === TRUE) {
-            $zip->extractTo($xmlDir);
+            $xmlContent = $zip->getFromName('one');
             $zip->close();
         } else {
             throw new Exception('Zip not opened!');
         }
-        $xmlContent = FileHelper::load($xmlDir . '/one');
         return $xmlContent;
     }
 }

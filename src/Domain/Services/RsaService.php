@@ -20,6 +20,8 @@ class RsaService
         //define('CRYPT_RSA_SMALLEST_PRIME', 64); // makes it so multi-prime RSA is used
         $keys = $rsa->createKey($bits);
 
+        dd($keys['publickey']);
+
         $store->setPublicKey($keys['publickey']);
         $store->setPrivateKey($keys['privatekey']);
     }
