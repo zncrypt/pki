@@ -47,7 +47,12 @@ class QrDecoderHelper
 
     private static function unZip($data)
     {
+<<<<<<< HEAD:src/X509/Domain/Helpers/QrDecoderHelper.php
         $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
+=======
+        FileHelper::createDirectory($xmlDir);
+        $zipFile = $xmlDir . '/zip.zip';
+>>>>>>> 8128b985a9e767c74090b129d6bd41a3364c3f88:src/X509/Domain/Helpers/QrHelper.php
         FileHelper::save($zipFile, $data);
         $zip = new \ZipArchive();
         $res = $zip->open($zipFile);
@@ -57,6 +62,12 @@ class QrDecoderHelper
         } else {
             throw new Exception('Zip not opened!');
         }
+<<<<<<< HEAD:src/X509/Domain/Helpers/QrDecoderHelper.php
+=======
+        $xmlContent = FileHelper::load($xmlDir . '/one');
+        unlink($zipFile);
+        unlink($xmlDir . '/one');
+>>>>>>> 8128b985a9e767c74090b129d6bd41a3364c3f88:src/X509/Domain/Helpers/QrHelper.php
         return $xmlContent;
     }
 }
