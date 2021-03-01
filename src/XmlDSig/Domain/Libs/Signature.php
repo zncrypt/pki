@@ -1,20 +1,26 @@
 <?php
 
-namespace ZnCrypt\Pki\XmlDSig\Domain\Helpers;
+namespace ZnCrypt\Pki\XmlDSig\Domain\Libs;
 
-use ZnCrypt\Pki\XmlDSig\Domain\Entities\VerifyEntity;
 use DOMDocument;
 use Exception;
 use phpseclib\File\X509;
 use RobRichards\XMLSecLibs\XMLSecEnc;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
 use ZnCore\Base\Encoders\XmlEncoder;
+use ZnCrypt\Pki\X509\Domain\Helpers\X509Helper;
 use ZnCrypt\Pki\X509\Domain\Services\SignatureService;
+use ZnCrypt\Pki\XmlDSig\Domain\Entities\VerifyEntity;
 
-class EgovVerifyHelper
+class Signature
 {
 
     private $x509;
+    private $privateKey;
+    private $publicKey;
+    private $certificate;
+    private $password;
 
     public function __construct()
     {
@@ -26,7 +32,57 @@ class EgovVerifyHelper
         $this->x509->loadCA($ca);
     }
 
-    public function verify(string $xml, string $publicKey = null): VerifyEntity
+    public function loadPrivateKey(string $privateKey, string $password = null)
+    {
+        $this->privateKey = $privateKey;
+        if($password) {
+            $this->password = $password;
+        }
+    }
+
+    public function loadPublicKey(string $publicKey)
+    {
+        $this->publicKey = $publicKey;
+    }
+
+    public function loadCertificate(string $certificate)
+    {
+        $this->certificate = $certificate;
+    }
+
+    public function sign(string $sourceXml): string
+    {
+        $doc = new DOMDocument();
+        $doc->loadXML($sourceXml);
+        $objDSig = new XMLSecurityDSig();
+        $objDSig->setCanonicalMethod(XMLSecurityDSig::EXC_C14N);
+        // Sign using SHA-256
+        $objDSig->addReference(
+            $doc,
+            XMLSecurityDSig::SHA256,
+            ['http://www.w3.org/2000/09/xmldsig#enveloped-signature']
+        );
+
+        // Create a new (private) Security key
+        $objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, array('type' => 'private'));
+
+        //If key has a passphrase, set it using
+        $objKey->passphrase = $this->password;
+
+        // Load the private key
+        $objKey->loadKey($this->privateKey, false);
+
+        // Sign the XML file
+        $objDSig->sign($objKey);
+
+        // Append the signature to the XML
+        $objDSig->appendSignature($doc->documentElement);
+        // Save the signed XML
+        $signedXml = $doc->saveXML();
+        return $signedXml;
+    }
+
+    public function verify(string $xml): VerifyEntity
     {
         $doc = new DOMDocument();
         $doc->loadXML($xml);
@@ -44,8 +100,13 @@ class EgovVerifyHelper
         }
 
         $objKeyInfo = XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
-        if (!$objKeyInfo->key && $publicKey) {
-            $objKey->loadKey($publicKey);
+        if (!$objKeyInfo->key) {
+            if($this->publicKey) {
+                $objKey->loadKey($this->publicKey);
+            }
+            if($this->certificate) {
+                $objKey->loadKey($this->certificate, false, true);
+            }
         }
 
         try {
@@ -73,6 +134,18 @@ class EgovVerifyHelper
         return $verifyEntity;
     }
 
+    public function verifyCertificate($certContent): VerifyEntity
+    {
+        $certArray = $this->x509->loadX509($certContent);
+        $certificateEntity = X509Helper::certArrayToEntity($certArray, $certContent);
+        $verifyEntity = new VerifyEntity();
+        $verifyEntity->setCertificateSignature($this->x509->validateSignature());
+        $verifyEntity->setCertificateDate($this->x509->validateDate());
+        $verifyEntity->setPerson(X509Helper::createPersonEntity($certificateEntity->getSubject()));
+        $verifyEntity->setCertificateData($certArray);
+        return $verifyEntity;
+    }
+
     private function extractCertificateFromXml(string $xml)
     {
         $xmlEncoder = new XmlEncoder();
@@ -83,7 +156,7 @@ class EgovVerifyHelper
         return $certContent;
     }
 
-    public function validateX509Cert(string $xml): bool
+    /*public function validateX509Cert(string $xml): bool
     {
         $certContent = $this->extractCertificateFromXml($xml);
         //dd($certContent);
@@ -92,7 +165,7 @@ class EgovVerifyHelper
         dd(json_encode($certArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
         return $this->x509->validateSignature();
-    }
+    }*/
 
     private function getRootNCa(): string
     {
