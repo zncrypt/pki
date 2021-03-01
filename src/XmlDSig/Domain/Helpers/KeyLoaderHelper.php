@@ -2,8 +2,8 @@
 
 namespace ZnCrypt\Pki\XmlDSig\Domain\Helpers;
 
-use App\Modules\Crypt\Domain\Entities\KeyEntity;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
 
 class KeyLoaderHelper
 {
