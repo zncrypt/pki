@@ -4,6 +4,7 @@ namespace ZnCrypt\Pki\XmlDSig\Domain\Libs;
 
 use DOMDocument;
 use Exception;
+use phpseclib\Crypt\RSA;
 use phpseclib\File\X509;
 use RobRichards\XMLSecLibs\XMLSecEnc;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
@@ -11,6 +12,8 @@ use RobRichards\XMLSecLibs\XMLSecurityKey;
 use ZnCore\Base\Encoders\XmlEncoder;
 use ZnCrypt\Pki\X509\Domain\Helpers\X509Helper;
 use ZnCrypt\Pki\X509\Domain\Services\SignatureService;
+use ZnCrypt\Pki\XmlDSig\Domain\Entities\FingerprintEntity;
+use ZnCrypt\Pki\XmlDSig\Domain\Entities\HashEntity;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\VerifyEntity;
 
 class Signature
@@ -48,6 +51,28 @@ class Signature
     public function loadCertificate(string $certificate)
     {
         $this->certificate = $certificate;
+    }
+
+    public function publicKeyFingerprint($publicKey): FingerprintEntity
+    {
+//        $result = '-----BEGIN CERTIFICATE-----'.PHP_EOL;
+//        $result .= $certificate.PHP_EOL;
+//        $result .= '-----END CERTIFICATE-----';
+//        //dd($certificate);
+//        $certificateResource = openssl_x509_read(base64_decode($certificate));
+//        $publicKey = openssl_get_publickey($certificateResource);
+
+        $rsa = new RSA();
+        $rsa->loadKey($publicKey);
+
+        //dd($result);
+        //$cert = openssl_x509_read(($result));
+        $hashEntity = new FingerprintEntity();
+
+        $hashEntity->setSha256($rsa->getPublicKeyFingerprint('sha256'));
+        $hashEntity->setSha1($rsa->getPublicKeyFingerprint('sha1'));
+        $hashEntity->setMd5($rsa->getPublicKeyFingerprint('md5'));
+        return $hashEntity;
     }
 
     public function sign(string $sourceXml): string
@@ -126,11 +151,14 @@ class Signature
 
         $verifyEntity = new VerifyEntity();
         $verifyEntity->setCertificateSignature($this->x509->validateSignature());
+
         $verifyEntity->setCertificateDate($this->x509->validateDate());
         $verifyEntity->setSignature($objXMLSecDSig->verify($objKey) === 1);
         $verifyEntity->setDigest($isValidDigest);
         $verifyEntity->setPerson($info->getPerson());
         $verifyEntity->setCertificateData($certArray);
+//        dd($certArray['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']);
+        $verifyEntity->setFingerprint($this->publicKeyFingerprint($certArray['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']));
         return $verifyEntity;
     }
 
@@ -141,7 +169,9 @@ class Signature
         $verifyEntity = new VerifyEntity();
         $verifyEntity->setCertificateSignature($this->x509->validateSignature());
         $verifyEntity->setCertificateDate($this->x509->validateDate());
-        $verifyEntity->setPerson(X509Helper::createPersonEntity($certificateEntity->getSubject()));
+        //$verifyEntity->setPerson(X509Helper::createPersonEntity($certificateEntity->getSubject()));
+        //dd($certArray);
+        $verifyEntity->setFingerprint($this->publicKeyFingerprint($certArray['tbsCertificate']['subjectPublicKeyInfo']['subjectPublicKey']));
         $verifyEntity->setCertificateData($certArray);
         return $verifyEntity;
     }

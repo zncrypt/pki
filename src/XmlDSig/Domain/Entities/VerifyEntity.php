@@ -12,6 +12,7 @@ class VerifyEntity
     private $certificateDate = false;
     private $digest = false;
     private $signature = false;
+    private $fingerprint;
     private $person;
     private $certificateData;
 
@@ -63,6 +64,16 @@ class VerifyEntity
     public function setSignature(bool $signature): void
     {
         $this->signature = $signature;
+    }
+
+    public function getFingerprint(): ?FingerprintEntity
+    {
+        return $this->fingerprint;
+    }
+
+    public function setFingerprint(FingerprintEntity $fingerprint): void
+    {
+        $this->fingerprint = $fingerprint;
     }
 
     public function isVerify(): bool
