@@ -19,15 +19,15 @@ class C14n
     {
         $this->formatArray = $format;
         $encodersCollection = new Collection();
-        if (array_intersect(['sort-string', 'sort-string', 'sort-regular', 'sort-numeric', 'sort-locale-string', 'sort-natural', 'sort-flag-case'], $this->formatArray)) {
+        if (array_intersect(SortEncoder::params(), $this->formatArray)) {
             $sort = new SortEncoder($this->formatArray);
             $encodersCollection->add($sort);
         }
-        $this->encoders = new AggregateEncoder($encodersCollection);
         $encodersCollection->add(new JsonEncoder($this->formatArray));
-        if (in_array('hex-block', $this->formatArray)) {
+        if (array_intersect(HexEncoder::params(), $this->formatArray)) {
             $encodersCollection->add(new HexEncoder($this->formatArray));
         }
+        $this->encoders = new AggregateEncoder($encodersCollection);
     }
 
     public function decode($encoded)

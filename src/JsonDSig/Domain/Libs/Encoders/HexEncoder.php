@@ -5,7 +5,7 @@ namespace ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders;
 use ZnCore\Base\Helpers\StringHelper;
 use ZnCore\Base\Interfaces\EncoderInterface;
 
-class HexEncoder implements EncoderInterface
+class HexEncoder implements C14nEncoderInterface
 {
 
     private $formatArray;
@@ -13,6 +13,11 @@ class HexEncoder implements EncoderInterface
     public function __construct($format)
     {
         $this->formatArray = $format;
+    }
+
+    public static function params(): array
+    {
+        return ['hex-block'];
     }
 
     public function encode($data)

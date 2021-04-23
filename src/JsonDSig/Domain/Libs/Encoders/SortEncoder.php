@@ -5,7 +5,7 @@ namespace ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders;
 use ZnCore\Base\Interfaces\EncoderInterface;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\C14nSort;
 
-class SortEncoder implements EncoderInterface
+class SortEncoder implements C14nEncoderInterface
 {
 
     private $formatArray;
@@ -13,6 +13,11 @@ class SortEncoder implements EncoderInterface
     public function __construct($format)
     {
         $this->formatArray = $format;
+    }
+
+    public static function params(): array
+    {
+        return ['sort-string', 'sort-string', 'sort-regular', 'sort-numeric', 'sort-locale-string', 'sort-natural', 'sort-flag-case'];
     }
 
     public function encode($data)
