@@ -2,66 +2,43 @@
 
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs;
 
+use Illuminate\Support\Collection;
+use ZnCore\Base\Encoders\AggregateEncoder;
 use ZnCore\Base\Helpers\StringHelper;
+use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\HexEncoder;
+use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\JsonEncoder;
+use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\SortEncoder;
 
 class C14n
 {
 
     private $formatArray;
+    private $encoders;
 
     public function __construct($format = 'sort-locale-string,hex-block')
     {
         $this->formatArray = explode(',', $format);
+        $encodersCollection = new Collection();
+        if (array_intersect(['sort-string', 'sort-string', 'sort-regular', 'sort-numeric', 'sort-locale-string', 'sort-natural', 'sort-flag-case'], $this->formatArray)) {
+            $sort = new SortEncoder($this->formatArray);
+            $encodersCollection->add($sort);
+        }
+        $this->encoders = new AggregateEncoder($encodersCollection);
+        $encodersCollection->add(new JsonEncoder($this->formatArray));
+        if (in_array('hex-block', $this->formatArray)) {
+            $encodersCollection->add(new HexEncoder($this->formatArray));
+        }
     }
 
-    public function decode($hex)
+    public function decode($encoded)
     {
-        $hex = StringHelper::removeAllSpace($hex);
-        $json = hex2bin($hex);
-        $data = json_decode($json, JSON_OBJECT_AS_ARRAY);
+        $data = $this->encoders->decode($encoded);
         return $data;
     }
 
     public function encode($data)
     {
-        if (in_array('sort-string', $this->formatArray)) {
-            $this->sort($data, 'sort-string');
-        }
-        if (in_array('sort-string', $this->formatArray)) {
-            $this->sort($data, 'sort-string');
-        }
-        if (in_array('sort-regular', $this->formatArray)) {
-            $this->sort($data, 'sort-regular');
-        }
-        if (in_array('sort-numeric', $this->formatArray)) {
-            $this->sort($data, 'sort-numeric');
-        }
-        if (in_array('sort-locale-string', $this->formatArray)) {
-            $this->sort($data, 'sort-locale-string');
-        }
-        if (in_array('sort-natural', $this->formatArray)) {
-            $this->sort($data, 'sort-natural');
-        }
-        if (in_array('sort-flag-case', $this->formatArray)) {
-            $this->sort($data, 'sort-flag-case');
-        }
-        
-        $json = json_encode($data, JSON_UNESCAPED_UNICODE);
-        $hex = bin2hex($json);
-        $array = mb_str_split($hex, 2);
-
-        $chunckedArray = array_chunk($array, 32);
-        $string = '';
-        foreach ($chunckedArray as $lineArray) {
-            $string .= implode(' ', $lineArray) . "\n";
-
-        }
-        return $string;
-    }
-
-    public function sort(&$data, $params)
-    {
-        $sort = new C14nSort($params);
-        $data = $sort->run($data);
+        $data = $this->encoders->encode($data);
+        return $data;
     }
 }
