@@ -4,7 +4,9 @@ namespace ZnCrypt\Pki\JsonDSig\Domain\Libs;
 
 class C14nSort {
 
-    public function run($data, $params)
+    private $param;
+    
+    public function __construct($params)
     {
         $assoc = [
             'sort-string' => SORT_STRING, // строковое сравнение элементов
@@ -14,8 +16,12 @@ class C14nSort {
             'sort-natural' => SORT_NATURAL, // сравнение элементов как строки, используя "естественный порядок", например natsort()
             'sort-flag-case' => SORT_FLAG_CASE, // можно объединять (побитовое ИЛИ) с SORT_STRING или SORT_NATURAL для сортировки строк без учёта регистра 
         ];
-        $param = $assoc[$params];
-        $this->sort_recursive($data, 'ksort', $param);
+        $this->param = $assoc[$params];
+    }
+
+    public function run($data)
+    {
+        $this->sort_recursive($data, 'ksort', $this->param);
         return $data;
     }
 

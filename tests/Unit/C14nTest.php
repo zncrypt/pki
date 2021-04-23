@@ -35,8 +35,8 @@ final class C14nTest extends BaseTest {
         
         //dd($decoded);
         
-        //$this->assertSame($decoded, $data);
-        //$this->assertSame($expectedJson, json_encode($data, JSON_UNESCAPED_UNICODE));
+//        $this->assertSame($decoded, $data);
+//        $this->assertSame($expectedJson, json_encode($data, JSON_UNESCAPED_UNICODE));
         $this->assertSame($expected, $actual);
     }
 }

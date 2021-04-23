@@ -12,7 +12,6 @@ class C14n
     public function __construct($format = 'sort-locale-string,hex-block')
     {
         $this->formatArray = explode(',', $format);
-        //dd($formatArray);
     }
 
     public function decode($hex)
@@ -62,7 +61,7 @@ class C14n
 
     public function sort(&$data, $params)
     {
-        $sort = new C14nSort();
-        $data = $sort->run($data, $params);
+        $sort = new C14nSort($params);
+        $data = $sort->run($data);
     }
 }
