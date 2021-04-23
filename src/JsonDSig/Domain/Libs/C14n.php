@@ -2,6 +2,8 @@
 
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs;
 
+use ZnCore\Base\Helpers\StringHelper;
+
 class C14n
 {
 
@@ -10,7 +12,15 @@ class C14n
 
     }
 
-    public function run($data)
+    public function decode($hex)
+    {
+        $hex = StringHelper::removeAllSpace($hex);
+        $json = hex2bin($hex);
+        $data = json_decode($json, JSON_OBJECT_AS_ARRAY);
+        return $data;
+    }
+    
+    public function encode($data)
     {
         $this->sort($data);
         $json = json_encode($data, JSON_UNESCAPED_UNICODE);

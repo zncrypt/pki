@@ -11,8 +11,8 @@ final class C14nTest extends BaseTest {
         $list = [
             'arrays',
             'french',
+            'unicode',
 //            'structures',
-//            'unicode',
 //            'values',
 //            'weird',
         ];
@@ -29,9 +29,10 @@ final class C14nTest extends BaseTest {
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY);
         $c14n = new C14n();
         $c14n->sort($data);
-        $actual = $c14n->run($data);
-
-
+        $actual = $c14n->encode($data);
+        $decoded = $c14n->decode($actual);
+        
+        $this->assertSame($decoded, $data);
         $this->assertSame($expectedJson, json_encode($data, JSON_UNESCAPED_UNICODE));
         $this->assertSame($expected, $actual);
     }
