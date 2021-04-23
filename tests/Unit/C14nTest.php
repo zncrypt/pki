@@ -12,7 +12,7 @@ final class C14nTest extends BaseTest {
             'arrays',
             'french',
             'unicode',
-//            'structures',
+            'structures',
 //            'values',
 //            'weird',
         ];
