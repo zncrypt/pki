@@ -28,7 +28,7 @@ final class C14nTest extends BaseTest {
         $expected = "5b 35 36 2c 7b 22 64 22 3a 74 72 75 65 2c 22 31 30 22 3a 6e 75 6c 6c 2c 22 31 22 3a 5b 5d 7d 5d\n";
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
-        $c14n = new C14n('hex-block');
+        $c14n = new C14n(['hex-block']);
         $actual = $c14n->encode($data);
         $decoded = $c14n->decode($actual);
         
@@ -44,7 +44,7 @@ final class C14nTest extends BaseTest {
         $expected = "5b 35 36 2c 7b 22 64 22 3a 74 72 75 65 2c 22 31 30 22 3a 6e 75 6c 6c 2c 22 31 22 3a 5b 5d 7d 5d\n";
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
-        $c14n = new C14n('sort-locale-string');
+        $c14n = new C14n(['sort-locale-string']);
         $actual = $c14n->encode($data);
         $decoded = $c14n->decode($actual);
 
@@ -60,7 +60,7 @@ final class C14nTest extends BaseTest {
         $expected = file_get_contents(__DIR__ . '/../data/outhex/' . $name . '.txt');
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
-        $c14n = new C14n('sort-locale-string,hex-block');
+        $c14n = new C14n(['sort-locale-string', 'hex-block']);
         //$c14n->sort($data);
         $actual = $c14n->encode($data);
         $decoded = $c14n->decode($actual);

@@ -15,9 +15,9 @@ class C14n
     private $formatArray;
     private $encoders;
 
-    public function __construct($format = 'sort-locale-string,hex-block')
+    public function __construct($format)
     {
-        $this->formatArray = explode(',', $format);
+        $this->formatArray = $format;
         $encodersCollection = new Collection();
         if (array_intersect(['sort-string', 'sort-string', 'sort-regular', 'sort-numeric', 'sort-locale-string', 'sort-natural', 'sort-flag-case'], $this->formatArray)) {
             $sort = new SortEncoder($this->formatArray);
