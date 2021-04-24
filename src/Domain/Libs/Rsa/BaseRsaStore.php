@@ -20,6 +20,7 @@ abstract class BaseRsaStore implements RsaStoreInterface
     const SUBJECT_FILE = 'subject.json';
 
     protected $readOnly = true;
+    protected $p12 = null;
     protected $privateKeyPassword = null;
 
     public function enableWrite() {
@@ -96,6 +97,16 @@ abstract class BaseRsaStore implements RsaStoreInterface
             //$key = $this->keyToLine($key);
         }
         return $key;
+    }
+
+    public function getP12()
+    {
+        return $this->p12;
+    }
+
+    public function setP12($p12): void
+    {
+        $this->p12 = $p12;
     }
 
     public function getPrivateKeyPassword()

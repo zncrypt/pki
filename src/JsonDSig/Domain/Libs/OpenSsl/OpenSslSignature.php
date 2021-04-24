@@ -6,6 +6,7 @@ use phpseclib\File\X509;
 use ZnCrypt\Base\Domain\Enums\OpenSslAlgoEnum;
 use ZnCrypt\Base\Domain\Exceptions\CertificateExpiredException;
 use ZnCrypt\Base\Domain\Exceptions\ExpiredException;
+use ZnCrypt\Base\Domain\Exceptions\FailCertificateSignatureException;
 use ZnCrypt\Base\Domain\Exceptions\FailSignatureException;
 use ZnCrypt\Base\Domain\Exceptions\InvalidDigestException;
 use ZnCrypt\Base\Domain\Helpers\EncodingHelper;
@@ -20,10 +21,15 @@ class OpenSslSignature
 {
 
     private $keyStore;
+    private $ca;
 
     public function __construct(RsaStoreInterface $keyStore)
     {
         $this->keyStore = $keyStore;
+    }
+
+    public function loadCA(string $ca) {
+        $this->ca = $ca;
     }
 
     public function sign($data, SignatureEntity $signatureEntity)
@@ -51,11 +57,11 @@ class OpenSslSignature
         //$openSsl = new OpenSsl();
 
         $x509 = new X509();
-//        $x509->loadCA(file_get_contents($this->rootCaFile));
+        $x509->loadCA($this->ca);
         $certArray = $x509->loadX509($signatureEntity->getX509Certificate());
 
         if (!$x509->validateSignature()) {
-            //throw new FailCertificateSignatureException();
+            throw new FailCertificateSignatureException('Fail certificate signature');
         }
         if (!$x509->validateDate()) {
             throw new CertificateExpiredException('Certificate expired');
@@ -67,7 +73,6 @@ class OpenSslSignature
         if(!$isVerify) {
             throw new FailSignatureException('Fail digest signature');
         }
-        //return $isVerify;
     }
 
     private function getDigest($body, SignatureEntity $signatureEntity)
