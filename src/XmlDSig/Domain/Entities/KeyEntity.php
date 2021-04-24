@@ -5,41 +5,41 @@ namespace ZnCrypt\Pki\XmlDSig\Domain\Entities;
 class KeyEntity
 {
 
-    private $private;
-    private $privatePassword;
-    private $public;
+    private $privateKey;
+    private $privateKeyPassword;
+    private $publicKey;
     private $certificate;
     private $p12;
     private $csr;
 
-    public function getPrivate()
+    public function getPrivateKey()
     {
         return $this->private;
     }
 
-    public function setPrivate($private): void
+    public function setPrivateKey($privateKey): void
     {
-        $this->private = $private;
+        $this->private = $privateKey;
     }
 
-    public function getPrivatePassword()
+    public function getPrivateKeyPassword()
     {
         return $this->privatePassword;
     }
 
-    public function setPrivatePassword($privatePassword): void
+    public function setPrivateKeyPassword($privateKeyPassword): void
     {
-        $this->privatePassword = $privatePassword;
+        $this->privatePassword = $privateKeyPassword;
     }
 
-    public function getPublic()
+    public function getPublicKey()
     {
         return $this->public;
     }
 
-    public function setPublic($public): void
+    public function setPublicKey($publicKey): void
     {
-        $this->public = $public;
+        $this->public = $publicKey;
     }
 
     public function getCertificate()

@@ -8,7 +8,7 @@ use ZnCrypt\Pki\Domain\Enums\RsaKeyFormatEnum;
 interface RsaStoreInterface
 {
 
-    public function enableWrite();
+    //public function enableWrite();
 
     public function setCertificate(string $cert);
 

@@ -13,13 +13,13 @@ class KeyLoaderHelper
         $worked = openssl_pkcs12_read($p12, $results, $password);
         if($worked) {
             $keyEntity = new KeyEntity();
-            $keyEntity->setPrivate($results['pkey']);
+            $keyEntity->setPrivateKey($results['pkey']);
             $keyEntity->setCertificate($results['cert']);
             $keyEntity->setP12($p12);
 
-            $private_key = openssl_pkey_get_private($keyEntity->getPrivate());
+            $private_key = openssl_pkey_get_private($keyEntity->getPrivateKey());
             $pem_public_key = openssl_pkey_get_details($private_key);
-            $keyEntity->setPublic($pem_public_key['key']);
+            $keyEntity->setPublicKey($pem_public_key['key']);
             return $keyEntity;
         } else {
             throw new \Exception('Bad p12');
