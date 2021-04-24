@@ -36,25 +36,20 @@ class OpenSslSignature
     {
         $digestBinaryValue = $this->getDigest($data, $signatureEntity);
         $signatureMethod = OpenSslAlgoEnum::nameToOpenSsl($signatureEntity->getSignatureMethod());
-        //$openSsl = new OpenSsl();
         $signatureBinaryValue = OpenSslHelper::sign($digestBinaryValue, $signatureMethod, $this->keyStore->getPrivateKey(), $this->keyStore->getPrivateKeyPassword());
         $digestValue = EncodingHelper::encode($digestBinaryValue, $signatureEntity->getDigestFormat());
         $signatureEntity->setDigestValue($digestValue);
-        $signatureEntity->setSignatureValue(base64_encode($signatureBinaryValue));
+        $signatureValue = EncodingHelper::encode($signatureBinaryValue, $signatureEntity->getSignatureFormat());
+        $signatureEntity->setSignatureValue($signatureValue);
         $certificate = RsaKeyHelper::keyToLine($this->keyStore->getCertificate());
         $signatureEntity->setX509Certificate($certificate);
     }
 
     public function verify($data, SignatureEntity $signatureEntity)
     {
-        $digestBinaryValue = $this->getDigest($data, $signatureEntity);
-        $digestValue = EncodingHelper::encode($digestBinaryValue, $signatureEntity->getDigestFormat());
-        if ($signatureEntity->getDigestValue() != $digestValue) {
-            throw new InvalidDigestException('Fail digest');
-        }
+        $digestBinaryValue = $this->checkDigest($data, $signatureEntity);
         $signatureMethod = OpenSslAlgoEnum::nameToOpenSsl($signatureEntity->getSignatureMethod());
-        $signatureBinaryValue = base64_decode($signatureEntity->getSignatureValue());
-        //$openSsl = new OpenSsl();
+        $signatureBinaryValue = EncodingHelper::decode($signatureEntity->getSignatureValue(), $signatureEntity->getSignatureFormat());
 
         $x509 = new X509();
         $x509->loadCA($this->ca);
@@ -73,6 +68,17 @@ class OpenSslSignature
         if(!$isVerify) {
             throw new FailSignatureException('Fail signature');
         }
+    }
+
+    private function checkDigest($data, SignatureEntity $signatureEntity)
+    {
+        $digestBinaryValue = $this->getDigest($data, $signatureEntity);
+//        $digestValue = EncodingHelper::encode($digestBinaryValue, $signatureEntity->getDigestFormat());
+        $digestBinaryValue2 = EncodingHelper::decode($signatureEntity->getDigestValue(), $signatureEntity->getDigestFormat());
+        if ($digestBinaryValue2 != $digestBinaryValue) {
+            throw new InvalidDigestException('Fail digest');
+        }
+        return $digestBinaryValue;
     }
 
     private function getDigest($body, SignatureEntity $signatureEntity)

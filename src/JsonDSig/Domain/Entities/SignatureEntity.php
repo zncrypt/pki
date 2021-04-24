@@ -9,6 +9,7 @@ class SignatureEntity
     private $digestFormat;
     private $digestValue;
     private $signatureMethod;
+    private $signatureFormat;
     private $signatureValue;
     private $x509Certificate;
 
@@ -50,6 +51,16 @@ class SignatureEntity
     public function setSignatureMethod($signatureMethod): void
     {
         $this->signatureMethod = $signatureMethod;
+    }
+
+    public function getSignatureFormat()
+    {
+        return $this->signatureFormat;
+    }
+
+    public function setSignatureFormat($signatureFormat): void
+    {
+        $this->signatureFormat = $signatureFormat;
     }
 
     public function getSignatureValue()

@@ -34,15 +34,16 @@ final class SignatureTest extends BaseTest
 
         $signatureEntity = new SignatureEntity();
         $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
-        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
         $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
 
         $keyStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
         $keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
-        $signature = new OpenSslSignature($keyStore);
-        $signature->loadCA($keyCaStore->getCertificate());
-        $signature->sign($body, $signatureEntity);
-        $signature->verify($body, $signatureEntity);
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature->sign($body, $signatureEntity);
+        $openSslSignature->verify($body, $signatureEntity);
 
         //$this->assertTrue($isVerify);
         $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
@@ -66,18 +67,47 @@ final class SignatureTest extends BaseTest
 
         $signatureEntity = new SignatureEntity();
         $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
-        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
         $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
         $signatureEntity->setDigestValue('0bJLMm+1XRRufFhPivRIM6gOYwQoRKKUvf4jDxMEEdA=');
         $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
         $signatureEntity->setX509Certificate($certificate);
         $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
         $signatureEntity->setSignatureValue($signature);
 
-        $signature = new OpenSslSignature($keyStore);
-        $signature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature->verify($body, $signatureEntity);
 
-        $signature->verify($body, $signatureEntity);
+        $this->assertTrue(true);
+    }
+
+    public function testVerifySort()
+    {
+        $body = [
+            'status' => 100,
+            'name' => 'Bob',
+            'id' => 1,
+        ];
+
+        $keyStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
+        $keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
+
+        $signatureEntity = new SignatureEntity();
+        $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
+        $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
+        $signatureEntity->setDigestValue('0bJLMm+1XRRufFhPivRIM6gOYwQoRKKUvf4jDxMEEdA=');
+        $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
+        $signatureEntity->setX509Certificate($certificate);
+        $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
+        $signatureEntity->setSignatureValue($signature);
+
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature->verify($body, $signatureEntity);
 
         $this->assertTrue(true);
     }
@@ -95,19 +125,20 @@ final class SignatureTest extends BaseTest
 
         $signatureEntity = new SignatureEntity();
         $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
-        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
         $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
         $signatureEntity->setDigestValue('0bJLMm+1XRRufFhPivRIM6gOYwQoRKKUvf4jDxMEEdA=');
         $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
         $signatureEntity->setX509Certificate($certificate);
         $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
         $signatureEntity->setSignatureValue($signature);
 
-        $signature = new OpenSslSignature($keyStore);
-        $signature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->loadCA($keyCaStore->getCertificate());
 
         $this->expectException(InvalidDigestException::class);
-        $signature->verify($body, $signatureEntity);
+        $openSslSignature->verify($body, $signatureEntity);
     }
 
     public function testVerifyFailSignature()
@@ -123,19 +154,20 @@ final class SignatureTest extends BaseTest
 
         $signatureEntity = new SignatureEntity();
         $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
-        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
         $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
         $signatureEntity->setDigestValue('0bJLMm+1XRRufFhPivRIM6gOYwQoRKKUvf4jDxMEEdA=');
         $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
         $signatureEntity->setX509Certificate($certificate);
         $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signatureFail.txt');
         $signatureEntity->setSignatureValue($signature);
 
-        $signature = new OpenSslSignature($keyStore);
-        $signature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->loadCA($keyCaStore->getCertificate());
 
         $this->expectException(FailSignatureException::class);
-        $signature->verify($body, $signatureEntity);
+        $openSslSignature->verify($body, $signatureEntity);
     }
 
     public function testVerifyFailCertificateSignature()
@@ -147,22 +179,23 @@ final class SignatureTest extends BaseTest
         ];
 
         $keyStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
-        $keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
+        //$keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
 
         $signatureEntity = new SignatureEntity();
         $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
-        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
         $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
         $signatureEntity->setDigestValue('0bJLMm+1XRRufFhPivRIM6gOYwQoRKKUvf4jDxMEEdA=');
         $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
         $signatureEntity->setX509Certificate($certificate);
         $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
         $signatureEntity->setSignatureValue($signature);
 
-        $signature = new OpenSslSignature($keyStore);
-        $signature->loadCA(__DIR__ . '/../../data/JsonDSig/rsaKeyPair/caUnknown/certificate.pem');
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->loadCA(__DIR__ . '/../../data/JsonDSig/rsaKeyPair/caUnknown/certificate.pem');
 
         $this->expectException(FailCertificateSignatureException::class);
-        $signature->verify($body, $signatureEntity);
+        $openSslSignature->verify($body, $signatureEntity);
     }
 }
