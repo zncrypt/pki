@@ -12,6 +12,16 @@ use DateTime;
 class X509Helper
 {
 
+    public static function extractPublicKey(string $certificateBase64): string {
+        $pemCertificate = "-----BEGIN CERTIFICATE-----
+".$certificateBase64."
+-----END CERTIFICATE-----";
+        $resourceCertificate = openssl_x509_read($pemCertificate);
+        $pub_key = openssl_pkey_get_public($resourceCertificate);
+        $keyData = openssl_pkey_get_details($pub_key);
+        return $keyData['key'];
+    }
+
     public static function certArrayToEntity(array $certArray, string $pemCert): CertificateEntity {
 //        dd($certArray);
         $certificateEntity = new CertificateEntity();

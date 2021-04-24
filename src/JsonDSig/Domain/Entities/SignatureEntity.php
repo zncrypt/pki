@@ -6,6 +6,7 @@ class SignatureEntity
 {
 
     private $digestMethod;
+    private $digestFormat;
     private $digestValue;
     private $signatureMethod;
     private $signatureValue;
@@ -19,6 +20,16 @@ class SignatureEntity
     public function setDigestMethod($digestMethod): void
     {
         $this->digestMethod = $digestMethod;
+    }
+
+    public function getDigestFormat()
+    {
+        return $this->digestFormat;
+    }
+
+    public function setDigestFormat($digestFormat): void
+    {
+        $this->digestFormat = $digestFormat;
     }
 
     public function getDigestValue()
