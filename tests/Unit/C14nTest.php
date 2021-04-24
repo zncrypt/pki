@@ -25,11 +25,10 @@ final class C14nTest extends BaseTest {
     public function testFrenchHexBlock() {
         $name = 'french';
         $input = file_get_contents(__DIR__ . '/../data/input/french.json');
-        //$expected = "5b 35 36 2c 7b 22 64 22 3a 74 72 75 65 2c 22 31 30 22 3a 6e 75 6c 6c 2c 22 31 22 3a 5b 5d 7d 5d\n";
-        $expected = file_get_contents(__DIR__ . '/../data/outhex/frenchHexBlock.txt');
+        $expected = file_get_contents(__DIR__ . '/../data/outhex/frenchHexString.txt');
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
-        $c14n = new C14n(['sort-string', 'hex-block', 'json-unescaped-unicode']);
+        $c14n = new C14n(['sort-string', 'hex-string', 'json-unescaped-unicode']);
         $actual = $c14n->encode($data);
         $decoded = $c14n->decode($actual);
 
@@ -53,7 +52,7 @@ final class C14nTest extends BaseTest {
 
     private function go($name) {
         $input = file_get_contents(__DIR__ . '/../data/input/' . $name . '.json');
-        $expectedJson = file_get_contents(__DIR__ . '/../data/output/' . $name . '.json');
+        //$expectedJson = file_get_contents(__DIR__ . '/../data/output/' . $name . '.json');
         $expected = file_get_contents(__DIR__ . '/../data/outhex/' . $name . '.txt');
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
