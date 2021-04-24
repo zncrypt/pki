@@ -22,6 +22,11 @@ class OpenSslSignature
 
     private $keyStore;
     private $ca;
+    private $c14nProfile = 'default';
+    private $c14nProfiles = [
+        'default' => ['sort-string', 'hex-string', 'json-unescaped-unicode'],
+        'lite' => ['json-unescaped-unicode'],
+    ];
 
     public function __construct(RsaStoreInterface $keyStore)
     {
@@ -30,6 +35,10 @@ class OpenSslSignature
 
     public function loadCA(string $ca) {
         $this->ca = $ca;
+    }
+
+    public function setC14nProfile(string $name) {
+        $this->c14nProfile = $name;
     }
 
     public function sign($data, SignatureEntity $signatureEntity)
@@ -83,8 +92,15 @@ class OpenSslSignature
 
     private function getDigest($body, SignatureEntity $signatureEntity)
     {
-        $c14n = new C14n(['sort-string', 'hex-string', 'json-unescaped-unicode']);
-        $c14nData = $c14n->encode($body);
+        $c14nData = $this->getC14n($body);
         return hash($signatureEntity->getDigestMethod(), $c14nData, true);
+    }
+
+    private function getC14n($body): string
+    {
+        $profileConfig = $this->c14nProfiles[$this->c14nProfile];
+        $c14n = new C14n($profileConfig);
+        $c14nData = $c14n->encode($body);
+        return $c14nData;
     }
 }

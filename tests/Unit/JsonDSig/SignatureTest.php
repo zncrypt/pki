@@ -45,13 +45,64 @@ final class SignatureTest extends BaseTest
         $openSslSignature->sign($body, $signatureEntity);
         $openSslSignature->verify($body, $signatureEntity);
 
-        //$this->assertTrue($isVerify);
         $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
 
         $this->assertSame('0bJLMm+1XRRufFhPivRIM6gOYwQoRKKUvf4jDxMEEdA=', $signatureEntity->getDigestValue());
         $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
         $this->assertSame($certificate, $signatureEntity->getX509Certificate());
         $this->assertSame($signature, $signatureEntity->getSignatureValue());
+    }
+
+    public function testSignDigestSha512()
+    {
+        $body = [
+            'id' => 1,
+            'name' => 'Bob',
+            'status' => 100,
+        ];
+
+        $signatureEntity = new SignatureEntity();
+        $signatureEntity->setDigestMethod(HashAlgoEnum::SHA512);
+        $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
+
+        $keyStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
+        $keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature->sign($body, $signatureEntity);
+        $openSslSignature->verify($body, $signatureEntity);
+
+        $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
+
+        $this->assertSame('rOlag9RjZm8oGtuXCFYZtC8KzYYi/ITjZgglML2nPufIbgY3H5Z8AiU5O7izSheCcJvh0g8nVsK+joO+jY0z5w==', $signatureEntity->getDigestValue());
+//        $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
+//        $this->assertSame($certificate, $signatureEntity->getX509Certificate());
+//        $this->assertSame($signature, $signatureEntity->getSignatureValue());
+    }
+
+    public function testSignLiteProfile()
+    {
+        $body = [
+            'id' => 1,
+            'name' => 'Bob',
+            'status' => 100,
+        ];
+
+        $signatureEntity = new SignatureEntity();
+        $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
+        $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setSignatureFormat(EncodingEnum::BASE64);
+
+        $keyStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
+        $keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
+        $openSslSignature = new OpenSslSignature($keyStore);
+        $openSslSignature->setC14nProfile('lite');
+        $openSslSignature->loadCA($keyCaStore->getCertificate());
+        $openSslSignature->sign($body, $signatureEntity);
+        $this->assertSame('rzsrzsueZldCP1qqhBfwI+Lzk1wr8cnos/89KuEF7wQ=', $signatureEntity->getDigestValue());
     }
 
     public function testVerify()
