@@ -10,6 +10,7 @@ class RsaKeyHelper
 {
 
     public static function keyToLine($key) {
+//        $key = trim($key);
         $key = preg_replace('/-----([^-]+)-----/i', '', $key);
         $key = preg_replace('/\s+/i', '', $key);
         return $key;
@@ -29,6 +30,7 @@ class RsaKeyHelper
 
     public static function base64ToPem($key, $tag) {
         //$key = chunk_split($key);
+        $key = self::keyToLine($key);
         $key = wordwrap($key, 64, PHP_EOL, true);
         $tag = mb_strtoupper($tag);
         $key = "-----BEGIN $tag-----\n$key\n-----END $tag-----";

@@ -53,7 +53,7 @@ class Rsa implements EncoderInterface
 
     public function sign(string $data, string $algoName = HashAlgoEnum::SHA256): SignatureEntity
     {
-        $p = openssl_pkey_get_private($this->store->getPrivateKey());
+        $p = openssl_pkey_get_private($this->store->getPrivateKey(), $this->store->getPrivateKeyPassword());
         //dd($p);
         openssl_sign($data, $signature, $p, HashAlgoEnum::nameToOpenSsl($algoName));
         openssl_free_key($p);
@@ -66,9 +66,7 @@ class Rsa implements EncoderInterface
     public function verify($data, SignatureEntity $signatureEntity): bool
     {
         $algo = HashAlgoEnum::nameToOpenSsl($signatureEntity->getAlgorithm());
-        //dd($this->store->getPublicKey(RsaStore::RSA_FORMAT_PEM));
         $p = openssl_pkey_get_public($this->store->getPublicKey(RsaKeyFormatEnum::PEM));
-        //dd($p);
         $isVerify = openssl_verify($data, $signatureEntity->getSignatureBin(), $p, $algo);
         openssl_free_key($p);
         return $isVerify;

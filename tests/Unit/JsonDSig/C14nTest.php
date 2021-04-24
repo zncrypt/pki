@@ -1,6 +1,6 @@
 <?php
 
-namespace ZnCrypt\Pki\Tests\Unit;
+namespace ZnCrypt\Pki\Tests\Unit\JsonDSig;
 
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\C14n;
 use ZnTool\Test\Base\BaseTest;
@@ -24,8 +24,8 @@ final class C14nTest extends BaseTest {
 
     public function testFrenchHexBlock() {
         $name = 'french';
-        $input = file_get_contents(__DIR__ . '/../data/input/french.json');
-        $expected = file_get_contents(__DIR__ . '/../data/outhex/frenchHexString.txt');
+        $input = file_get_contents(__DIR__ . '/../../data/input/french.json');
+        $expected = file_get_contents(__DIR__ . '/../../data/outhex/frenchHexString.txt');
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
         $c14n = new C14n(['sort-string', 'hex-string', 'json-unescaped-unicode']);
@@ -38,7 +38,7 @@ final class C14nTest extends BaseTest {
 
     public function testSort() {
         $name = 'arrays';
-        $input = file_get_contents(__DIR__ . '/../data/input/' . $name . '.json');
+        $input = file_get_contents(__DIR__ . '/../../data/input/' . $name . '.json');
         $expected = '[56,{"1":[],"10":null,"d":true}]';
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
@@ -51,9 +51,9 @@ final class C14nTest extends BaseTest {
     }
 
     private function go($name) {
-        $input = file_get_contents(__DIR__ . '/../data/input/' . $name . '.json');
-        //$expectedJson = file_get_contents(__DIR__ . '/../data/output/' . $name . '.json');
-        $expected = file_get_contents(__DIR__ . '/../data/outhex/' . $name . '.txt');
+        $input = file_get_contents(__DIR__ . '/../../data/input/' . $name . '.json');
+        //$expectedJson = file_get_contents(__DIR__ . '/../../data/output/' . $name . '.json');
+        $expected = file_get_contents(__DIR__ . '/../../data/outhex/' . $name . '.txt');
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
         $c14n = new C14n(['sort-locale-string', 'hex-block', 'json-unescaped-unicode']);
