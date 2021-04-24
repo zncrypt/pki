@@ -5,6 +5,7 @@ namespace ZnCrypt\Pki\Tests\Unit\JsonDSig;
 use ZnCrypt\Base\Domain\Enums\EncodingEnum;
 use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
 use ZnCrypt\Base\Domain\Enums\OpenSslAlgoEnum;
+use ZnCrypt\Base\Domain\Exceptions\InvalidDigestException;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyLoaderHelper;
 use ZnCrypt\Pki\Domain\Libs\Rsa\BaseRsaStore;
@@ -83,10 +84,10 @@ final class SignatureTest extends BaseTest
         $this->assertTrue(true);
     }
 
-    /*public function testSignFailDigest()
+    public function testVerifyBadDigest()
     {
         $body = [
-            'id' => 1,
+            'id' => 11111111,
             'name' => 'Bob',
             'status' => 100,
         ];
@@ -94,30 +95,23 @@ final class SignatureTest extends BaseTest
         $keyStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
         $keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
 
-        $signature = new OpenSslSignature($keyStore);
-        $signature->loadCA($keyCaStore->getCertificate());
-
         $signatureEntity = new SignatureEntity();
         $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
         $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
+        $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
+        $signatureEntity->setDigestValue('0bJLMm+1XRRufFhPivRIM6gOYwQoRKKUvf4jDxMEEdA=');
+        $certificate = RsaKeyHelper::keyToLine($keyStore->getCertificate());
+        $signatureEntity->setX509Certificate($certificate);
+        $signature = file_get_contents(__DIR__ . '/../../data/JsonDSig/signature/signature.txt');
+        $signatureEntity->setSignatureValue($signature);
 
-        $signature->sign($body, $signatureEntity);
+        $signature = new OpenSslSignature($keyStore);
+        $signature->loadCA($keyCaStore->getCertificate());
 
-        $body = [
-            'id' => 1222,
-            'name' => 'Bob',
-            'status' => 100,
-        ];
-
+        $this->expectException(InvalidDigestException::class);
         $isVerify = $signature->verify($body, $signatureEntity);
 
-        $this->assertTrue($isVerify);
-        $signature = 'e7Vzcxe3RwECsO6VrFCskBf97xMDwI2dTwPULazPC4tFAb8bFN001So4QUKTw6Vor1Xs1q0YYKsO3WcRbqyfx8jFE6QtxTG4NDfRU1gUtfZcG0Nf9PzIYkKXvptjJunMn4iG442K3osAO96e4z/Crh5zt9BWXp5f+HyKATXLwk52COVDmDTg3aoTFGyBJBmshjAsZ7urT0kyzE5iymsSpyaMAbTGQi0+UIfIqDEHEWmEyjFrumZQXy9Ub7G9ntkJjmjlOWBAEOqfQXk5yE3T9agYXLAwSygaXElmtXHbejyHNjRWHL4CErNISeAQ/xlZsi5oIt1l9A+2AJVLjoHdHw==';
-        $this->assertSame($signature, $signatureEntity->getSignatureValue());
-    }*/
-
-    private function getKeyStore(): RsaStoreInterface
-    {
-        return RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
+        //$this->assertTrue(true);
     }
+
 }

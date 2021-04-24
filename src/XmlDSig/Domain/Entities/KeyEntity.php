@@ -6,6 +6,7 @@ class KeyEntity
 {
 
     private $private;
+    private $privatePassword;
     private $public;
     private $certificate;
     private $p12;
@@ -19,6 +20,16 @@ class KeyEntity
     public function setPrivate($private): void
     {
         $this->private = $private;
+    }
+
+    public function getPrivatePassword()
+    {
+        return $this->privatePassword;
+    }
+
+    public function setPrivatePassword($privatePassword): void
+    {
+        $this->privatePassword = $privatePassword;
     }
 
     public function getPublic()
