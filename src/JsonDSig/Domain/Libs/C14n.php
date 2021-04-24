@@ -23,7 +23,10 @@ class C14n
             $sort = new SortEncoder($sortParam);
             $encodersCollection->add($sort);
         }
-        $encodersCollection->add(new JsonEncoder($this->formatArray));
+
+        $jsonParam = JsonEncoder::detect($this->formatArray);
+        $encodersCollection->add(new JsonEncoder($jsonParam));
+
         $hexParam = HexEncoder::detect($this->formatArray);
         if ($hexParam) {
             $encodersCollection->add(new HexEncoder($hexParam));

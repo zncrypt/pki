@@ -29,7 +29,7 @@ final class C14nTest extends BaseTest {
         $expected = file_get_contents(__DIR__ . '/../data/outhex/frenchHexBlock.txt');
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
-        $c14n = new C14n(['sort-string', 'hex-block']);
+        $c14n = new C14n(['sort-string', 'hex-block', 'json-unescaped-unicode']);
         $actual = $c14n->encode($data);
         $decoded = $c14n->decode($actual);
 
@@ -43,7 +43,7 @@ final class C14nTest extends BaseTest {
         $expected = '[56,{"1":[],"10":null,"d":true}]';
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
-        $c14n = new C14n(['sort-locale-string']);
+        $c14n = new C14n(['sort-locale-string', 'json-unescaped-unicode']);
         $actual = $c14n->encode($data);
         $decoded = $c14n->decode($actual);
 
@@ -57,7 +57,7 @@ final class C14nTest extends BaseTest {
         $expected = file_get_contents(__DIR__ . '/../data/outhex/' . $name . '.txt');
 
         $data = json_decode($input, JSON_OBJECT_AS_ARRAY | JSON_FORCE_OBJECT);
-        $c14n = new C14n(['sort-locale-string', 'hex-block']);
+        $c14n = new C14n(['sort-locale-string', 'hex-block', 'json-unescaped-unicode']);
         $actual = $c14n->encode($data);
         $decoded = $c14n->decode($actual);
 
