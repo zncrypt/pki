@@ -3,26 +3,19 @@
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders;
 
 use ZnCore\Base\Helpers\StringHelper;
-use ZnCore\Base\Interfaces\EncoderInterface;
 
-class HexEncoder implements C14nEncoderInterface
+class HexEncoder extends BaseEncoder
 {
 
-    private $formatArray;
-
-    public function __construct($format)
+    public static function paramName(): string
     {
-        $this->formatArray = $format;
-    }
-
-    public static function params(): array
-    {
-        return ['hex-block'];
+        return 'hex-';
     }
 
     public function encode($data)
     {
-        if (in_array('hex-block', $this->formatArray)) {
+        $data = bin2hex($data);
+        if ($this->hasParam('hex-block')) {
             $hex = $this->toHex($data, 'hex-block');
             return $hex;
         }
@@ -36,10 +29,9 @@ class HexEncoder implements C14nEncoderInterface
         return $json;
     }
 
-    public function toHex($json, $params)
+    private function toHex($json)
     {
-        $hex = bin2hex($json);
-        $array = mb_str_split($hex, 2);
+        $array = mb_str_split($json, 2);
         $chunckedArray = array_chunk($array, 32);
         $string = '';
         foreach ($chunckedArray as $lineArray) {

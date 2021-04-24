@@ -4,7 +4,6 @@ namespace ZnCrypt\Pki\JsonDSig\Domain\Libs;
 
 use Illuminate\Support\Collection;
 use ZnCore\Base\Encoders\AggregateEncoder;
-use ZnCore\Base\Helpers\StringHelper;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\HexEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\JsonEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\SortEncoder;
@@ -19,13 +18,15 @@ class C14n
     {
         $this->formatArray = $format;
         $encodersCollection = new Collection();
-        if (array_intersect(SortEncoder::params(), $this->formatArray)) {
-            $sort = new SortEncoder($this->formatArray);
+        $sortParam = SortEncoder::detect($this->formatArray);
+        if ($sortParam) {
+            $sort = new SortEncoder($sortParam);
             $encodersCollection->add($sort);
         }
         $encodersCollection->add(new JsonEncoder($this->formatArray));
-        if (array_intersect(HexEncoder::params(), $this->formatArray)) {
-            $encodersCollection->add(new HexEncoder($this->formatArray));
+        $hexParam = HexEncoder::detect($this->formatArray);
+        if ($hexParam) {
+            $encodersCollection->add(new HexEncoder($hexParam));
         }
         $this->encoders = new AggregateEncoder($encodersCollection);
     }

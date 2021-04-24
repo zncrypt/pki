@@ -2,47 +2,20 @@
 
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders;
 
-use ZnCore\Base\Interfaces\EncoderInterface;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\C14nSort;
 
-class SortEncoder implements C14nEncoderInterface
+class SortEncoder extends BaseEncoder
 {
 
-    private $formatArray;
-
-    public function __construct($format)
+    public static function paramName(): string
     {
-        $this->formatArray = $format;
-    }
-
-    public static function params(): array
-    {
-        return ['sort-string', 'sort-string', 'sort-regular', 'sort-numeric', 'sort-locale-string', 'sort-natural', 'sort-flag-case'];
+        return 'sort-';
     }
 
     public function encode($data)
     {
-        if (in_array('sort-string', $this->formatArray)) {
-            $this->sort($data, 'sort-string');
-        }
-        if (in_array('sort-string', $this->formatArray)) {
-            $this->sort($data, 'sort-string');
-        }
-        if (in_array('sort-regular', $this->formatArray)) {
-            $this->sort($data, 'sort-regular');
-        }
-        if (in_array('sort-numeric', $this->formatArray)) {
-            $this->sort($data, 'sort-numeric');
-        }
-        if (in_array('sort-locale-string', $this->formatArray)) {
-            $this->sort($data, 'sort-locale-string');
-        }
-        if (in_array('sort-natural', $this->formatArray)) {
-            $this->sort($data, 'sort-natural');
-        }
-        if (in_array('sort-flag-case', $this->formatArray)) {
-            $this->sort($data, 'sort-flag-case');
-        }
+        $param = $this->encodeParam($this->getFirstParam());
+        $this->sort_recursive($data, 'ksort', $param);
         return $data;
     }
 
@@ -51,9 +24,29 @@ class SortEncoder implements C14nEncoderInterface
         return $encodedData;
     }
 
-    public function sort(&$data, $params)
+    private function encodeParam(string $param): int
     {
-        $sort = new C14nSort($params);
-        $data = $sort->run($data);
+        $assoc = [
+            'sort-string' => SORT_STRING, // строковое сравнение элементов
+            'sort-regular' => SORT_REGULAR, // обычное сравнение элементов; подробности описаны в разделе операторы сравнения
+            'sort-numeric' => SORT_NUMERIC, // числовое сравнение элементов
+            'sort-locale-string' => SORT_LOCALE_STRING, // сравнение элементов как строки на основе текущего языкового стандарта. Используется языковой стандарт, который можно изменить с помощью setlocale()
+            'sort-natural' => SORT_NATURAL, // сравнение элементов как строки, используя "естественный порядок", например natsort()
+            'sort-flag-case' => SORT_FLAG_CASE, // можно объединять (побитовое ИЛИ) с SORT_STRING или SORT_NATURAL для сортировки строк без учёта регистра 
+        ];
+        return $assoc[$param];
+    }
+
+    private function sort_recursive(&$array, $func, $params = null)
+    {
+        if (!is_array($array)) {
+            return $array;
+        }
+        foreach ($array as &$value) {
+            if (is_array($value)) {
+                $this->sort_recursive($value, $func, $params);
+            }
+        }
+        return $func($array, $params);
     }
 }
