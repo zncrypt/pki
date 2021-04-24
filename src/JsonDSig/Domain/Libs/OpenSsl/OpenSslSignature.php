@@ -50,7 +50,7 @@ class OpenSslSignature
         $digestBinaryValue = $this->getDigest($data, $signatureEntity);
         $digestValue = EncodingHelper::encode($digestBinaryValue, $signatureEntity->getDigestFormat());
         if ($signatureEntity->getDigestValue() != $digestValue) {
-            throw new InvalidDigestException();
+            throw new InvalidDigestException('Fail digest');
         }
         $signatureMethod = OpenSslAlgoEnum::nameToOpenSsl($signatureEntity->getSignatureMethod());
         $signatureBinaryValue = base64_decode($signatureEntity->getSignatureValue());
@@ -71,7 +71,7 @@ class OpenSslSignature
         $publicKey = X509Helper::extractPublicKey($signatureEntity->getX509Certificate());
         $isVerify = OpenSslHelper::verify($digestBinaryValue, $signatureBinaryValue, $signatureMethod, $publicKey);
         if(!$isVerify) {
-            throw new FailSignatureException('Fail digest signature');
+            throw new FailSignatureException('Fail signature');
         }
     }
 
