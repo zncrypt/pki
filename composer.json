@@ -11,6 +11,7 @@
 	"minimum-stability": "dev",
 	"require": {
 		"phpseclib/phpseclib": "2.*",
+		"robrichards/xmlseclibs": "3.*",
 		"zncrypt/base": "v0.0.*"
 	},
 	"autoload": {
