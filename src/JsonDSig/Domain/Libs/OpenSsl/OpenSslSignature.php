@@ -24,7 +24,7 @@ class OpenSslSignature
     private $ca;
     private $c14nProfile = 'default';
     private $c14nProfiles = [
-        'default' => ['sort-string', 'hex-string', 'json-unescaped-unicode'],
+        'default' => ['sort-string', 'json-unescaped-unicode', 'hex-string'],
         'lite' => ['json-unescaped-unicode'],
     ];
 
