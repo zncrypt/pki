@@ -5,6 +5,7 @@ namespace ZnCrypt\Pki\JsonDSig\Domain\Entities;
 class SignatureEntity
 {
 
+    private $c14nMethod = 'sort-string,hex-string,json-unescaped-unicode';
     private $digestMethod;
     private $digestFormat;
     private $digestValue;
@@ -12,6 +13,16 @@ class SignatureEntity
     private $signatureFormat;
     private $signatureValue;
     private $x509Certificate;
+
+    public function getC14nMethod()
+    {
+        return $this->c14nMethod;
+    }
+
+    public function setC14nMethod($c14nMethod): void
+    {
+        $this->c14nMethod = $c14nMethod;
+    }
 
     public function getDigestMethod()
     {
