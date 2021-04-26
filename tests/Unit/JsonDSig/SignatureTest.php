@@ -178,6 +178,7 @@ final class SignatureTest extends BaseTest
         ];
 
         $signatureEntity = new SignatureEntity();
+        $signatureEntity->setC14nMethod('json-unescaped-unicode');
         $signatureEntity->setDigestMethod(HashAlgoEnum::SHA256);
         $signatureEntity->setDigestFormat(EncodingEnum::BASE64);
         $signatureEntity->setSignatureMethod(OpenSslAlgoEnum::SHA256);
@@ -186,7 +187,7 @@ final class SignatureTest extends BaseTest
         $keyStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directory);
         $keyCaStore = RsaKeyLoaderHelper::loadKeyStoreFromDirectory($this->directoryCa);
         $openSslSignature = new OpenSslSignature($keyStore);
-        $openSslSignature->setC14nProfile('lite');
+        //$openSslSignature->setC14nProfile('lite');
         $openSslSignature->loadCA($keyCaStore->getCertificate());
         $openSslSignature->sign($body, $signatureEntity);
         $this->assertSame('rzsrzsueZldCP1qqhBfwI+Lzk1wr8cnos/89KuEF7wQ=', $signatureEntity->getDigestValue());
