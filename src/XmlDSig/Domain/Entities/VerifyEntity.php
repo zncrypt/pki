@@ -8,10 +8,10 @@ class VerifyEntity
 {
 
     //private $certificate = false;
-    private $certificateSignature = false;
-    private $certificateDate = false;
-    private $digest = false;
-    private $signature = false;
+    private $certificateSignature = null;
+    private $certificateDate = null;
+    private $digest = null;
+    private $signature = null;
     private $fingerprint;
     private $person;
     private $certificateData;
@@ -26,7 +26,7 @@ class VerifyEntity
         $this->certificateSignature = $certificate;
     }*/
 
-    public function isCertificateSignature(): bool
+    public function isCertificateSignature(): ?bool
     {
         return $this->certificateSignature;
     }
@@ -36,7 +36,7 @@ class VerifyEntity
         $this->certificateSignature = $certificateSignature;
     }
 
-    public function isCertificateDate(): bool
+    public function isCertificateDate(): ?bool
     {
         return $this->certificateDate;
     }
@@ -46,7 +46,7 @@ class VerifyEntity
         $this->certificateDate = $certificateDate;
     }
 
-    public function isDigest(): bool
+    public function isDigest(): ?bool
     {
         return $this->digest;
     }
@@ -56,7 +56,7 @@ class VerifyEntity
         $this->digest = $digest;
     }
 
-    public function isSignature(): bool
+    public function isSignature(): ?bool
     {
         return $this->signature;
     }

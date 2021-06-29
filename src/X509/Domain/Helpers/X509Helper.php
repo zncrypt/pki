@@ -22,19 +22,22 @@ class X509Helper
         return $keyData['key'];
     }
 
-    public static function certArrayToEntity(array $certArray, string $pemCert): CertificateEntity {
+    public static function certArrayToEntity(array $certArray, string $pemCert = null): CertificateEntity {
 //        dd($certArray);
         $certificateEntity = new CertificateEntity();
         $certificateEntity->setVersion($certArray['tbsCertificate']['version']);
         $extensions = self::getAssocExt($certArray['tbsCertificate']['extensions']);
 
-        $arr = [];
-        foreach ($extensions['id-pe-authorityInfoAccess'] as $item) {
-            $method = $item['accessMethod'];
-            $location = $item['accessLocation']['uniformResourceIdentifier'];
-            $arr[$method] = $location;
+        if(isset($extensions['id-pe-authorityInfoAccess'])) {
+            $arr = [];
+            foreach ($extensions['id-pe-authorityInfoAccess'] as $item) {
+                $method = $item['accessMethod'];
+                $location = $item['accessLocation']['uniformResourceIdentifier'];
+                $arr[$method] = $location;
+            }
+            $certificateEntity->setAuthorityInfo($arr);
         }
-        $certificateEntity->setAuthorityInfo($arr);
+
 
 
         /*$url = $arr['id-ad-caIssuers'];
@@ -115,6 +118,24 @@ class X509Helper
             }
         }
         return $params;
+    }
+
+    public static function getAssoc1(array $rdnSequence): array
+    {
+        $arr = [];
+        foreach ($rdnSequence as $item) {
+            $value = $item[0]['value'];
+            $type = $item[0]['type'];
+            $key = preg_replace('/^[\s\S]*-at-/', '', $type);
+            $item = [
+                'name' => $key,
+                'type' => $type,
+                'value' => $value,
+            ];
+            $arr[] = $item;
+            //$arr[$key] = ArrayHelper::first($value);
+        }
+        return $arr;
     }
 
     public static function getAssoc(array $rdnSequence): array
