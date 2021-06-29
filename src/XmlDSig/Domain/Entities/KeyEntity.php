@@ -8,6 +8,7 @@ class KeyEntity
     private $privateKey;
     private $privateKeyPassword;
     private $publicKey;
+    private $certificateRequest;
     private $certificate;
     private $p12;
     private $csr;
@@ -41,6 +42,17 @@ class KeyEntity
     {
         $this->public = $publicKey;
     }
+
+    public function getCertificateRequest()
+    {
+        return $this->getCsr();
+    }
+
+//    public function setCertificateRequest($certificateRequest): void
+//    {
+//        $this->certificateRequest = $certificateRequest;
+//        
+//    }
 
     public function getCertificate()
     {
