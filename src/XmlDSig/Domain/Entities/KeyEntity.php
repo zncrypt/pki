@@ -5,6 +5,7 @@ namespace ZnCrypt\Pki\XmlDSig\Domain\Entities;
 class KeyEntity
 {
 
+    private $name;
     private $privateKey;
     private $privateKeyPassword;
     private $publicKey;
@@ -12,6 +13,16 @@ class KeyEntity
     private $certificate;
     private $p12;
     private $csr;
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
 
     public function getPrivateKey()
     {

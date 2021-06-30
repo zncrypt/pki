@@ -26,7 +26,7 @@ class KeyLoaderHelper
             throw new \Exception('Bad p12');
         }
     }
-
+/*
     public static function loadFromDirectory(string $directory): KeyEntity
     {
         $names = [
@@ -37,7 +37,7 @@ class KeyLoaderHelper
             'publicKey' => 'public.pem',
             'p12' => 'rsa.p12',
         ];
-        
+
         $data = [];
         foreach ($names as $attributeName => $fileName) {
             $file = $directory . '/' . $fileName;
@@ -45,7 +45,7 @@ class KeyLoaderHelper
                 $data[$attributeName] = FileHelper::load($file);
             }
         }
-        
+
         $userKeyEntity = new KeyEntity;
         EntityHelper::setAttributes($userKeyEntity, $data);
         return $userKeyEntity;
@@ -64,7 +64,7 @@ class KeyLoaderHelper
         ];
 
         $data = EntityHelper::toArray($keyEntity);
-        
+
         foreach ($data as $attributeName => $value) {
             if(!empty($value)) {
                 $fileName = $names[$attributeName];
@@ -73,5 +73,5 @@ class KeyLoaderHelper
                 FileHelper::save($file, $value);
             }
         }
-    }
+    }*/
 }
