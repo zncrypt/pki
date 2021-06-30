@@ -3,6 +3,7 @@
 namespace ZnCrypt\Pki\XmlDSig\Domain\Helpers;
 
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Domain\Helpers\EntityHelper;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
 
 class KeyLoaderHelper
@@ -23,6 +24,54 @@ class KeyLoaderHelper
             return $keyEntity;
         } else {
             throw new \Exception('Bad p12');
+        }
+    }
+
+    public static function loadFromDirectory(string $directory): KeyEntity
+    {
+        $names = [
+            'certificate' => 'certificate.pem',
+            'certificateRequest' => 'certificateRequest.pem',
+            'privateKeyPassword' => 'password.txt',
+            'privateKey' => 'private.pem',
+            'publicKey' => 'public.pem',
+            'p12' => 'rsa.p12',
+        ];
+        
+        $data = [];
+        foreach ($names as $attributeName => $fileName) {
+            $file = $directory . '/' . $fileName;
+            if(file_exists($file)) {
+                $data[$attributeName] = FileHelper::load($file);
+            }
+        }
+        
+        $userKeyEntity = new KeyEntity;
+        EntityHelper::setAttributes($userKeyEntity, $data);
+        return $userKeyEntity;
+    }
+
+    public static function saveToDirectory(string $directory, KeyEntity $keyEntity): void
+    {
+        $names = [
+            'certificate' => 'certificate.pem',
+            'certificateRequest' => 'certificateRequest.pem',
+            'csr' => 'certificateRequest.pem',
+            'privateKeyPassword' => 'password.txt',
+            'privateKey' => 'private.pem',
+            'publicKey' => 'public.pem',
+            'p12' => 'rsa.p12',
+        ];
+
+        $data = EntityHelper::toArray($keyEntity);
+        
+        foreach ($data as $attributeName => $value) {
+            if(!empty($value)) {
+                $fileName = $names[$attributeName];
+                $file = $directory . '/' . $fileName;
+                //dd($file);
+                FileHelper::save($file, $value);
+            }
         }
     }
 }
