@@ -91,6 +91,11 @@ class Signature
         // Create a new (private) Security key
         $objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA256, array('type' => 'private'));
 
+        /*if($this->certificate) {
+            dd($this->certificate);
+            $objKey->loadKey($this->certificate, false, true);
+        }*/
+
         //If key has a passphrase, set it using
         $objKey->passphrase = $this->password;
 
