@@ -22,13 +22,28 @@ class DirectoryKeyLoader
         'p12' => 'rsa.p12',
     ];
 
+    public function __construct(string $directory = null)
+    {
+        $this->directory = $directory; // ?? DotEnv::get('PKI_DIRECTORY');
+    }
+
+    public function getDirectory(): string
+    {
+        return $this->directory;
+    }
+
+    public function setDirectory(string $directory): void
+    {
+        $this->directory = $directory;
+    }
+    
     public function all(): Collection
     {
-        $pkiDirectory = DotEnv::get('PKI_DIRECTORY');
-        $files = FileHelper::scanDir($pkiDirectory);
+        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
+        $files = FileHelper::scanDir($this->directory);
         $collection = new Collection();
         foreach ($files as $file) {
-            $fileNmae = $pkiDirectory . '/' . $file;
+            $fileNmae = $this->directory . '/' . $file;
             if(is_dir($fileNmae)) {
                 $keyEntity = $this->load($file);
                 $collection->add($keyEntity);
@@ -39,16 +54,16 @@ class DirectoryKeyLoader
     
     public function remove(string $name): void
     {
-        $pkiDirectory = DotEnv::get('PKI_DIRECTORY');
-        $directory = $pkiDirectory . '/' . $name;
+        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
+        $directory = $this->directory . '/' . $name;
         FileHelper::removeDirectory($directory);
         FileHelper::createDirectory($directory);
     }
 
     public function load(string $name): KeyEntity
     {
-        $pkiDirectory = DotEnv::get('PKI_DIRECTORY');
-        $directory = $pkiDirectory . '/' . $name;
+        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
+        $directory = $this->directory . '/' . $name;
 
         $data = [];
         foreach ($this->names as $attributeName => $fileName) {
@@ -66,8 +81,8 @@ class DirectoryKeyLoader
     
     public function save(string $name, KeyEntity $keyEntity): void
     {
-        $pkiDirectory = DotEnv::get('PKI_DIRECTORY');
-        $directory = $pkiDirectory . '/' . $name;
+        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
+        $directory = $this->directory . '/' . $name;
         $data = EntityHelper::toArray($keyEntity);
         unset($data['name']);
         foreach ($data as $attributeName => $value) {

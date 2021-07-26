@@ -26,12 +26,12 @@ class KeyEntity
 
     public function getPrivateKey()
     {
-        return $this->private;
+        return $this->privateKey;
     }
 
     public function setPrivateKey($privateKey): void
     {
-        $this->private = $privateKey;
+        $this->privateKey = $privateKey;
     }
 
     public function getPrivateKeyPassword()
@@ -46,12 +46,12 @@ class KeyEntity
 
     public function getPublicKey()
     {
-        return $this->public;
+        return $this->publicKey;
     }
 
     public function setPublicKey($publicKey): void
     {
-        $this->public = $publicKey;
+        $this->publicKey = $publicKey;
     }
     
     public function getCertificateRequest()
