@@ -24,7 +24,7 @@ class DirectoryKeyLoader
 
     public function __construct(string $directory = null)
     {
-        $this->directory = $directory; // ?? DotEnv::get('PKI_DIRECTORY');
+        $this->directory = $directory;
     }
 
     public function getDirectory(): string
@@ -39,7 +39,6 @@ class DirectoryKeyLoader
     
     public function all(): Collection
     {
-        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
         $files = FileHelper::scanDir($this->directory);
         $collection = new Collection();
         foreach ($files as $file) {
@@ -54,7 +53,6 @@ class DirectoryKeyLoader
     
     public function remove(string $name): void
     {
-        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
         $directory = $this->directory . '/' . $name;
         FileHelper::removeDirectory($directory);
         FileHelper::createDirectory($directory);
@@ -62,7 +60,6 @@ class DirectoryKeyLoader
 
     public function load(string $name): KeyEntity
     {
-        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
         $directory = $this->directory . '/' . $name;
 
         $data = [];
@@ -81,7 +78,6 @@ class DirectoryKeyLoader
     
     public function save(string $name, KeyEntity $keyEntity): void
     {
-        //$pkiDirectory = DotEnv::get('PKI_DIRECTORY');
         $directory = $this->directory . '/' . $name;
         $data = EntityHelper::toArray($keyEntity);
         unset($data['name']);
