@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders;
 
-use ZnCore\Base\Interfaces\EncoderInterface;
+use ZnCore\Contract\Encoder\Interfaces\EncoderInterface;
 
 interface C14nEncoderInterface extends EncoderInterface
 {
