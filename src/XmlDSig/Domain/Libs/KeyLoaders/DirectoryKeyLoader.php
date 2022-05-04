@@ -3,6 +3,7 @@
 namespace ZnCrypt\Pki\XmlDSig\Domain\Libs\KeyLoaders;
 
 use Illuminate\Support\Collection;
+use ZnCore\Base\Helpers\FindFileHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\DotEnv\DotEnv;
 use ZnCore\Domain\Helpers\EntityHelper;
@@ -39,7 +40,7 @@ class DirectoryKeyLoader
     
     public function all(): Collection
     {
-        $files = FileHelper::scanDir($this->directory);
+        $files = FindFileHelper::scanDir($this->directory);
         $collection = new Collection();
         foreach ($files as $file) {
             $fileNmae = $this->directory . '/' . $file;
