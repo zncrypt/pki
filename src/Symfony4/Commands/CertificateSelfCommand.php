@@ -3,6 +3,7 @@
 namespace ZnCrypt\Pki\Symfony4\Commands;
 
 use Illuminate\Container\Container;
+use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
 use ZnCrypt\Pki\Domain\Entities\CertificateEntity;
 use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
 use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
@@ -40,7 +41,7 @@ class CertificateSelfCommand extends BaseGeneratorCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $issuerStore = new RsaStoreFile(FileHelper::path($_ENV['RSA_CA_DIRECTORY']));
+        $issuerStore = new RsaStoreFile(FilePathHelper::path($_ENV['RSA_CA_DIRECTORY']));
         //$subjectStore = new RsaStoreFile(FileHelper::path($_ENV['RSA_HOST_DIRECTORY']));
 
         $subjectEntity = new CertificateSubjectEntity;

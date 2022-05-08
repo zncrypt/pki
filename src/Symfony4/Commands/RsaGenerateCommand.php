@@ -3,6 +3,7 @@
 namespace ZnCrypt\Pki\Symfony4\Commands;
 
 use Illuminate\Container\Container;
+use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
 use ZnCrypt\Pki\Domain\Entities\CertificateEntity;
 use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
 use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
@@ -43,7 +44,7 @@ class RsaGenerateCommand extends BaseGeneratorCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $rsaDir = FileHelper::path($_ENV['RSA_DIRECTORY']);
+        $rsaDir = FilePathHelper::path($_ENV['RSA_DIRECTORY']);
 
         do {
             $question = new Question('Enter project name: ');

@@ -3,7 +3,8 @@
 namespace ZnCrypt\Pki\Symfony4\Commands;
 
 use Illuminate\Container\Container;
-use ZnCore\Base\Helpers\FindFileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FindFileHelper;
 use ZnCrypt\Pki\Domain\Entities\CertificateEntity;
 use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
 use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
@@ -42,7 +43,7 @@ class CertificateCommand extends BaseGeneratorCommand
 
     private function selectProfile($message, InputInterface $input, OutputInterface $output)
     {
-        $rsaDir = FileHelper::path($_ENV['RSA_DIRECTORY']);
+        $rsaDir = FilePathHelper::path($_ENV['RSA_DIRECTORY']);
         $profiles = FindFileHelper::scanDir($rsaDir);
         $question = new ChoiceQuestion(
             $message,
@@ -55,7 +56,7 @@ class CertificateCommand extends BaseGeneratorCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $rsaDir = FileHelper::path($_ENV['RSA_DIRECTORY']);
+        $rsaDir = FilePathHelper::path($_ENV['RSA_DIRECTORY']);
         /*$profiles = FileHelper::scanDir($rsaDir);
         $question = new ChoiceQuestion(
             'Select profile',

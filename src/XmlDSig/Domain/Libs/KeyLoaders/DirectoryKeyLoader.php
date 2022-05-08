@@ -3,7 +3,7 @@
 namespace ZnCrypt\Pki\XmlDSig\Domain\Libs\KeyLoaders;
 
 use Illuminate\Support\Collection;
-use ZnCore\Base\Helpers\FindFileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FindFileHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\DotEnv\DotEnv;
 use ZnCore\Domain\Helpers\EntityHelper;
