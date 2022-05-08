@@ -3,6 +3,7 @@
 namespace ZnCrypt\Pki\XmlDSig\Domain\Libs\KeyLoaders;
 
 use Illuminate\Support\Collection;
+use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 use ZnCore\Base\Libs\FileSystem\Helpers\FindFileHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\DotEnv\DotEnv;
@@ -67,7 +68,7 @@ class DirectoryKeyLoader
         foreach ($this->names as $attributeName => $fileName) {
             $file = $directory . '/' . $fileName;
             if(file_exists($file)) {
-                $data[$attributeName] = FileHelper::load($file);
+                $data[$attributeName] = FileStorageHelper::load($file);
             }
         }
 
@@ -86,7 +87,7 @@ class DirectoryKeyLoader
             if(!empty($value)) {
                 $fileName = $this->names[$attributeName];
                 $file = $directory . '/' . $fileName;
-                FileHelper::save($file, $value);
+                FileStorageHelper::save($file, $value);
             }
         }
     }

@@ -3,6 +3,7 @@
 namespace ZnCrypt\Pki\Domain\Helpers;
 
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreInterface;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreRam;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
@@ -42,10 +43,10 @@ class RsaKeyLoaderHelper
 
     public static function saveKeyStoreFromDirectory(RsaStoreInterface $keyStore, string $dir)
     {
-        FileHelper::save($dir . '/certificate.pem', $keyStore->getCertificate());
-        FileHelper::save($dir . '/private.pem', $keyStore->getPrivateKey());
-        FileHelper::save($dir . '/public.pem', $keyStore->getPublicKey());
-        FileHelper::save($dir . '/password.txt', $keyStore->getPrivateKeyPassword());
-        FileHelper::save($dir . '/rsa.p12', $keyStore->getP12());
+        FileStorageHelper::save($dir . '/certificate.pem', $keyStore->getCertificate());
+        FileStorageHelper::save($dir . '/private.pem', $keyStore->getPrivateKey());
+        FileStorageHelper::save($dir . '/public.pem', $keyStore->getPublicKey());
+        FileStorageHelper::save($dir . '/password.txt', $keyStore->getPrivateKeyPassword());
+        FileStorageHelper::save($dir . '/rsa.p12', $keyStore->getP12());
     }
 }

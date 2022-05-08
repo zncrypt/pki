@@ -5,6 +5,7 @@ namespace ZnCrypt\Pki\X509\Domain\Helpers;
 use Illuminate\Support\Collection;
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 
 class QrDecoderHelper
 {
@@ -67,7 +68,7 @@ class QrDecoderHelper
     public static function unZip($data)
     {
         $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
-        FileHelper::save($zipFile, $data);
+        FileStorageHelper::save($zipFile, $data);
         $zip = new \ZipArchive();
         $res = $zip->open($zipFile);
         if ($res === TRUE) {

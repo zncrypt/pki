@@ -2,6 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
+use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCore\Base\Exceptions\NotFoundException;
 use ZnCore\Base\Helpers\StringHelper;
@@ -26,7 +27,7 @@ class RsaStoreFile extends BaseRsaStore implements RsaStoreInterface
         if( ! file_exists($fileName)) {
             throw new NotFoundException("Not found $name!");
         }
-        $content = FileHelper::load($fileName);
+        $content = FileStorageHelper::load($fileName);
         return $content;
     }
 
@@ -34,7 +35,7 @@ class RsaStoreFile extends BaseRsaStore implements RsaStoreInterface
         if($this->readOnly) {
             throw new \Exception('Read only!');
         }
-        return FileHelper::save($this->dir . '/' . $name, $content);
+        return FileStorageHelper::save($this->dir . '/' . $name, $content);
     }
 
 }
