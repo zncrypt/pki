@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\X509\Domain\Entities;
 
-use ZnCore\Base\Helpers\StringHelper;
+use ZnCore\Base\Libs\Text\Helpers\StringHelper;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
 
 class SignatureEntity

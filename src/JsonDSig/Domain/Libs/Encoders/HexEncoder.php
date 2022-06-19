@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders;
 
-use ZnCore\Base\Helpers\StringHelper;
+use ZnCore\Base\Libs\Text\Helpers\StringHelper;
 
 class HexEncoder extends BaseEncoder
 {
