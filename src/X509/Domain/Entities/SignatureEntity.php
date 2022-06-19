@@ -2,7 +2,8 @@
 
 namespace ZnCrypt\Pki\X509\Domain\Entities;
 
-use ZnCore\Base\Libs\Text\Helpers\StringHelper;
+
+use ZnCore\Base\Libs\Text\Helpers\TextHelper;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
 
 class SignatureEntity
@@ -39,7 +40,7 @@ class SignatureEntity
 
     public function getCertificatePemFormat() :string
     {
-        $certificate = StringHelper::removeAllSpace($this->certificate);
+        $certificate = TextHelper::removeAllSpace($this->certificate);
         return RsaKeyHelper::base64ToPem($certificate, 'CERTIFICATE');
     }
 

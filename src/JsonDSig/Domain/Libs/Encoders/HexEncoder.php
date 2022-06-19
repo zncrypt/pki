@@ -2,7 +2,8 @@
 
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders;
 
-use ZnCore\Base\Libs\Text\Helpers\StringHelper;
+
+use ZnCore\Base\Libs\Text\Helpers\TextHelper;
 
 class HexEncoder extends BaseEncoder
 {
@@ -24,7 +25,7 @@ class HexEncoder extends BaseEncoder
 
     public function decode($encoded)
     {
-        $hex = StringHelper::removeAllSpace($encoded);
+        $hex = TextHelper::removeAllSpace($encoded);
         $json = hex2bin($hex);
         return $json;
     }
