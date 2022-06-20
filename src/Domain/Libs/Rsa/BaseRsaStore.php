@@ -7,7 +7,7 @@ use ZnCrypt\Pki\Domain\Enums\CertificateFormatEnum;
 use ZnCrypt\Pki\Domain\Enums\RsaKeyFormatEnum;
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
-use ZnCore\Domain\Helpers\EntityHelper;
+use ZnCore\Base\Libs\Entity\Helpers\EntityHelper;
 
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 

@@ -6,7 +6,7 @@ use FG\X509\PrivateKey;
 use phpseclib\Crypt\RSA;
 use phpseclib\File\X509;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
-use ZnCore\Domain\Helpers\EntityHelper;
+use ZnCore\Base\Libs\Entity\Helpers\EntityHelper;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
 
 class KeyLoaderHelper
