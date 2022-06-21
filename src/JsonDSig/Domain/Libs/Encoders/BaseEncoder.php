@@ -12,8 +12,6 @@ abstract class BaseEncoder implements C14nEncoderInterface
         $this->params = $params;
     }
 
-    abstract public static function paramName(): string;
-
     protected function hasParam(string $name): bool
     {
         return in_array($name, $this->params);
@@ -29,7 +27,7 @@ abstract class BaseEncoder implements C14nEncoderInterface
         return $this->params[0];
     }
     
-    public static function detect(array $array): array
+    /*public static function detect(array $array): array
     {
         $params = [];
         $paramName = static::paramName();
@@ -39,5 +37,5 @@ abstract class BaseEncoder implements C14nEncoderInterface
             }
         }
         return $params;
-    }
+    }*/
 }

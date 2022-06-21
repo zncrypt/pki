@@ -18,20 +18,35 @@ class C14n
     {
         $this->formatArray = $format;
         $encodersCollection = new Collection();
-        $sortParam = SortEncoder::detect($this->formatArray);
+//        $sortParam = SortEncoder::detect($this->formatArray);
+        $sortParam = $this->detect(SortEncoder::paramName(), $this->formatArray);
         if ($sortParam) {
             $sort = new SortEncoder($sortParam);
             $encodersCollection->add($sort);
         }
 
-        $jsonParam = JsonEncoder::detect($this->formatArray);
+//        $jsonParam = JsonEncoder::detect($this->formatArray);
+        $jsonParam = $this->detect(JsonEncoder::paramName(), $this->formatArray);
         $encodersCollection->add(new JsonEncoder($jsonParam));
 
-        $hexParam = HexEncoder::detect($this->formatArray);
+//        $hexParam = HexEncoder::detect($this->formatArray);
+        $hexParam = $this->detect(HexEncoder::paramName(), $this->formatArray);
         if ($hexParam) {
             $encodersCollection->add(new HexEncoder($hexParam));
         }
         $this->encoders = new AggregateEncoder($encodersCollection);
+    }
+
+    protected function detect(string $paramName, array $array): array
+    {
+        $params = [];
+//        $paramName = static::paramName();
+        foreach ($array as $item) {
+            if (strpos($item, $paramName) === 0) {
+                $params[] = $item;
+            }
+        }
+        return $params;
     }
 
     public function decode($encoded)
