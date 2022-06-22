@@ -13,7 +13,7 @@ use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
 use ZnCrypt\Pki\Domain\Services\CertificateService;
 use ZnCrypt\Pki\Domain\Services\RsaService;
 use ZnLib\Console\Symfony4\Question\ChoiceQuestion;
-use ZnCore\Base\Libs\Entity\Helpers\EntityHelper;
+use ZnCore\Domain\Entity\Helpers\EntityHelper;
 use ZnCore\Base\Enums\Measure\TimeEnum;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnTool\Generator\Domain\Dto\BuildDto;

@@ -3,7 +3,7 @@
 namespace ZnCrypt\Pki\Domain\Helpers;
 
 use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
-use ZnCore\Base\Libs\Entity\Helpers\EntityHelper;
+use ZnCore\Domain\Entity\Helpers\EntityHelper;
 
 
 class RsaKeyHelper
