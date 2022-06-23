@@ -3,7 +3,7 @@
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs;
 
 use Illuminate\Support\Collection;
-use ZnCore\Base\Encoders\AggregateEncoder;
+use ZnCore\Base\Encoders\ChainEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\HexEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\JsonEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\SortEncoder;
@@ -34,7 +34,7 @@ class C14n
         if ($hexParam) {
             $encodersCollection->add(new HexEncoder($hexParam));
         }
-        $this->encoders = new AggregateEncoder($encodersCollection);
+        $this->encoders = new ChainEncoder($encodersCollection);
     }
 
     protected function detect(string $paramName, array $array): array
