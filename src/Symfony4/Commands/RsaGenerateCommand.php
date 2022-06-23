@@ -2,33 +2,13 @@
 
 namespace ZnCrypt\Pki\Symfony4\Commands;
 
-use Illuminate\Container\Container;
-use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
-use ZnCrypt\Pki\Domain\Entities\CertificateEntity;
-use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
-use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
-use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
-use ZnCrypt\Pki\Domain\Libs\Rsa\Rsa;
-use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
-use ZnCrypt\Pki\Domain\Services\CertificateService;
-use ZnCrypt\Pki\Domain\Services\RsaService;
-use ZnLib\Console\Symfony4\Question\ChoiceQuestion;
-use ZnCore\Domain\Entity\Helpers\EntityHelper;
-use ZnCore\Base\Libs\Measure\Enums\TimeEnum;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
-use ZnTool\Generator\Domain\Dto\BuildDto;
-use ZnTool\Generator\Domain\Interfaces\Services\DomainServiceInterface;
-use ZnTool\Generator\Domain\Scenarios\Input\DomainNameInputScenario;
-use ZnTool\Generator\Domain\Scenarios\Input\DomainNamespaceInputScenario;
-use ZnTool\Generator\Domain\Scenarios\Input\DriverInputScenario;
-use ZnTool\Generator\Domain\Scenarios\Input\EntityAttributesInputScenario;
-use ZnTool\Generator\Domain\Scenarios\Input\IsCrudRepositoryInputScenario;
-use ZnTool\Generator\Domain\Scenarios\Input\IsCrudServiceInputScenario;
-use ZnTool\Generator\Domain\Scenarios\Input\NameInputScenario;
-use ZnTool\Generator\Domain\Scenarios\Input\TypeInputScenario;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
+use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
+use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
+use ZnCrypt\Pki\Domain\Services\RsaService;
 
 class RsaGenerateCommand extends BaseGeneratorCommand
 {
@@ -52,15 +32,15 @@ class RsaGenerateCommand extends BaseGeneratorCommand
             $profileName = $helper->ask($input, $output, $question);
             $dir = $rsaDir . DIRECTORY_SEPARATOR . $profileName;
             $isValid = true;
-            if(empty($profileName)) {
+            if (empty($profileName)) {
                 $output->writeln('<fg=yellow>Empty!</>');
                 $isValid = false;
             }
-            if(is_dir($dir)) {
+            if (is_dir($dir)) {
                 $output->writeln('<fg=yellow>Already exists!</>');
                 $isValid = false;
             }
-        } while( ! $isValid);
+        } while (!$isValid);
 
         $subjectStore = new RsaStoreFile($rsaDir . DIRECTORY_SEPARATOR . $profileName);
         $subjectStore->enableWrite();

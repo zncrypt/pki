@@ -2,11 +2,9 @@
 
 namespace ZnCrypt\Pki\Domain\Helpers;
 
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreInterface;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreRam;
-use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
 
 class RsaKeyLoaderHelper
 {
