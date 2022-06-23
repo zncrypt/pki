@@ -4,7 +4,7 @@ namespace ZnCrypt\Pki\X509\Domain\Helpers;
 
 use phpseclib\File\X509;
 use SimpleXMLElement;
-use ZnCore\Base\Libs\Arr\Helpers\ArrayHelper;
+use ZnCore\Base\Arr\Helpers\ArrayHelper;
 use ZnCrypt\Pki\X509\Domain\Entities\CertificateEntity;
 use ZnCrypt\Pki\X509\Domain\Entities\PersonEntity;
 use DateTime;

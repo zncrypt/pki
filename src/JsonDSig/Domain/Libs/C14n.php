@@ -3,7 +3,7 @@
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs;
 
 use Illuminate\Support\Collection;
-use ZnCore\Base\Libs\Format\Encoders\ChainEncoder;
+use ZnCore\Base\Format\Encoders\ChainEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\HexEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\JsonEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\SortEncoder;

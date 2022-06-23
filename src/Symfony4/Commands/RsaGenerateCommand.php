@@ -5,7 +5,7 @@ namespace ZnCrypt\Pki\Symfony4\Commands;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use ZnCore\Base\Libs\FileSystem\Helpers\FilePathHelper;
+use ZnCore\Base\FileSystem\Helpers\FilePathHelper;
 use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
 use ZnCrypt\Pki\Domain\Services\RsaService;

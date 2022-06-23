@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
-use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
 use ZnCore\Domain\Entity\Exceptions\NotFoundException;
 
 class RsaStoreFile extends BaseRsaStore implements RsaStoreInterface

@@ -3,8 +3,8 @@
 namespace ZnCrypt\Pki\X509\Domain\Helpers;
 
 use Illuminate\Support\Collection;
-use ZnCore\Base\Libs\Arr\Helpers\ArrayHelper;
-use ZnCore\Base\Libs\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\Base\Arr\Helpers\ArrayHelper;
+use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
 
 class QrDecoderHelper
 {
