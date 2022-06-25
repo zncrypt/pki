@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use ZnCore\Base\FileSystem\Helpers\FilePathHelper;
 use ZnCore\Base\FileSystem\Helpers\FindFileHelper;
-use ZnCore\Base\Time\Enums\TimeEnum;
+use ZnLib\Components\Time\Enums\TimeEnum;
 use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
 use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;

@@ -6,7 +6,7 @@ use ZnCore\Base\Container\Helpers\ContainerHelper;
 use ZnCore\Base\FileSystem\Helpers\FilePathHelper;
 use ZnLib\Console\Symfony4\Helpers\CommandHelper;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreFile;
-use ZnCore\Base\Time\Enums\TimeEnum;
+use ZnLib\Components\Time\Enums\TimeEnum;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Routing\RouteCollection;

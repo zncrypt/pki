@@ -9,7 +9,7 @@ use phpseclib\File\X509;
 use RobRichards\XMLSecLibs\XMLSecEnc;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
-use ZnCore\Base\Format\Encoders\XmlEncoder;
+use ZnLib\Components\Format\Encoders\XmlEncoder;
 use ZnCrypt\Pki\X509\Domain\Helpers\X509Helper;
 use ZnCrypt\Pki\X509\Domain\Services\SignatureService;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\FingerprintEntity;
