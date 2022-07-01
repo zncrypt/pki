@@ -39,7 +39,7 @@ class DirectoryKeyLoader
         $this->directory = $directory;
     }
     
-    public function all(): Collection
+    public function findAll(): Collection
     {
         $files = FindFileHelper::scanDir($this->directory);
         $collection = new Collection();
