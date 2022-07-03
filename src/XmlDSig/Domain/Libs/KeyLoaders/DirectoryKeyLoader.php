@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\XmlDSig\Domain\Libs\KeyLoaders;
 
-use Illuminate\Support\Collection;
+use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
 use ZnCore\Base\FileSystem\Helpers\FindFileHelper;
 use ZnCore\Base\FileSystem\Helpers\FileHelper;

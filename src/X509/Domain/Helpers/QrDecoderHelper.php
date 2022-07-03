@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\X509\Domain\Helpers;
 
-use Illuminate\Support\Collection;
+use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Base\Arr\Helpers\ArrayHelper;
 use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
 
