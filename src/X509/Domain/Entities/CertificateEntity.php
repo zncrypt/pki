@@ -2,7 +2,6 @@
 
 namespace ZnCrypt\Pki\X509\Domain\Entities;
 
-use Illuminate\Support\Facades\Date;
 use phpseclib\Math\BigInteger;
 use DateTime;
 
