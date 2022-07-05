@@ -2,6 +2,7 @@
 
 namespace ZnCrypt\Pki\X509\Domain\Helpers;
 
+use ZnCore\Domain\Collection\Interfaces\Enumerable;
 use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Base\Arr\Helpers\ArrayHelper;
 use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
@@ -30,7 +31,7 @@ class QrDecoderHelper
         return $xml->decode($xmlContent, 'xml', $context);
     }
 
-    public static function extract(array $qrs): Collection
+    public static function extract(array $qrs): Enumerable
     {
         $xml = new \Symfony\Component\Serializer\Encoder\XmlEncoder;
         $context = [

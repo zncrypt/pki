@@ -2,6 +2,7 @@
 
 namespace ZnCrypt\Pki\XmlDSig\Domain\Libs\KeyLoaders;
 
+use ZnCore\Domain\Collection\Interfaces\Enumerable;
 use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
 use ZnCore\Base\FileSystem\Helpers\FindFileHelper;
@@ -39,7 +40,7 @@ class DirectoryKeyLoader
         $this->directory = $directory;
     }
     
-    public function findAll(): Collection
+    public function findAll(): Enumerable
     {
         $files = FindFileHelper::scanDir($this->directory);
         $collection = new Collection();
