@@ -52,7 +52,7 @@ class QrDecoderHelper
         return new Collection($arr);
     }
 
-    public static function collectionToBin(Collection $collection): string
+    public static function collectionToBin(Enumerable $collection): string
     {
         $data = '';
         foreach ($collection as $item) {
