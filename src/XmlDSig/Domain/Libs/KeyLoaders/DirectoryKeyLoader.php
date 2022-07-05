@@ -2,12 +2,11 @@
 
 namespace ZnCrypt\Pki\XmlDSig\Domain\Libs\KeyLoaders;
 
-use ZnCore\Domain\Collection\Interfaces\Enumerable;
-use ZnCore\Domain\Collection\Libs\Collection;
+use ZnCore\Base\FileSystem\Helpers\FileHelper;
 use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
 use ZnCore\Base\FileSystem\Helpers\FindFileHelper;
-use ZnCore\Base\FileSystem\Helpers\FileHelper;
-use ZnCore\Base\DotEnv\Domain\Libs\DotEnv;
+use ZnCore\Domain\Collection\Interfaces\Enumerable;
+use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Domain\Entity\Helpers\EntityHelper;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
 
@@ -39,21 +38,21 @@ class DirectoryKeyLoader
     {
         $this->directory = $directory;
     }
-    
+
     public function findAll(): Enumerable
     {
         $files = FindFileHelper::scanDir($this->directory);
         $collection = new Collection();
         foreach ($files as $file) {
             $fileNmae = $this->directory . '/' . $file;
-            if(is_dir($fileNmae)) {
+            if (is_dir($fileNmae)) {
                 $keyEntity = $this->load($file);
                 $collection->add($keyEntity);
             }
         }
         return $collection;
     }
-    
+
     public function remove(string $name): void
     {
         $directory = $this->directory . '/' . $name;
@@ -68,7 +67,7 @@ class DirectoryKeyLoader
         $data = [];
         foreach ($this->names as $attributeName => $fileName) {
             $file = $directory . '/' . $fileName;
-            if(file_exists($file)) {
+            if (file_exists($file)) {
                 $data[$attributeName] = FileStorageHelper::load($file);
             }
         }
@@ -78,14 +77,14 @@ class DirectoryKeyLoader
         $userKeyEntity->setName($name);
         return $userKeyEntity;
     }
-    
+
     public function save(string $name, KeyEntity $keyEntity): void
     {
         $directory = $this->directory . '/' . $name;
         $data = EntityHelper::toArray($keyEntity);
         unset($data['name']);
         foreach ($data as $attributeName => $value) {
-            if(!empty($value)) {
+            if (!empty($value)) {
                 $fileName = $this->names[$attributeName];
                 $file = $directory . '/' . $fileName;
                 FileStorageHelper::save($file, $value);
