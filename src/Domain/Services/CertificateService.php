@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Services;
 
-use ZnCore\Domain\Entity\Helpers\EntityHelper;
+use ZnCore\Entity\Helpers\EntityHelper;
 use ZnCrypt\Base\Domain\Entities\CertificateInfoEntity;
 use ZnCrypt\Base\Domain\Enums\HashAlgoEnum;
 use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;

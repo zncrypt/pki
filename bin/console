@@ -2,8 +2,8 @@
 <?php
 
 use Symfony\Component\Console\Application;
-use ZnCore\Base\DotEnv\Domain\Libs\DotEnv;
-use ZnCore\Base\Container\Libs\Container;
+use ZnCore\DotEnv\Domain\Libs\DotEnv;
+use ZnCore\Container\Libs\Container;
 use ZnDatabase\Eloquent\Domain\Factories\ManagerFactory;
 use ZnDatabase\Eloquent\Domain\Capsule\Manager;
 

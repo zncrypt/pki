@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\JsonDSig\Domain\Libs;
 
-use ZnCore\Domain\Collection\Libs\Collection;
+use ZnCore\Collection\Libs\Collection;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\HexEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\JsonEncoder;
 use ZnCrypt\Pki\JsonDSig\Domain\Libs\Encoders\SortEncoder;

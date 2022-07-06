@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Helpers;
 
-use ZnCore\Base\FileSystem\Helpers\FileStorageHelper;
+use ZnCore\FileSystem\Helpers\FileStorageHelper;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreInterface;
 use ZnCrypt\Pki\Domain\Libs\Rsa\RsaStoreRam;
 
