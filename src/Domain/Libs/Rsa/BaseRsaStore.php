@@ -9,7 +9,7 @@ use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
 use ZnCore\Entity\Helpers\EntityHelper;
 
-use ZnCore\Base\Arr\Helpers\ArrayHelper;
+use ZnCore\Arr\Helpers\ArrayHelper;
 
 abstract class BaseRsaStore implements RsaStoreInterface
 {

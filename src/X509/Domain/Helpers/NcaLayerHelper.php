@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\X509\Domain\Helpers;
 
-use ZnCore\Base\Arr\Helpers\ArrayHelper;
+use ZnCore\Arr\Helpers\ArrayHelper;
 use ZnCrypt\Pki\X509\Domain\Entities\PersonEntity;
 use ZnCrypt\Pki\X509\Domain\Entities\SignatureEntity;
 
