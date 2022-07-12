@@ -23,11 +23,11 @@ use ZnCore\FileSystem\Helpers\FileHelper;
 
 $containerConfigurator = ContainerHelper::getContainerConfiguratorByContainer($container);
 $containerConfigurator->bind(RsaStoreFile::class, function () {
-    $rsaDirectory = FilePathHelper::rootPath() . '/' . $_ENV['RSA_CA_DIRECTORY'];
+    $rsaDirectory = $_ENV['RSA_CA_DIRECTORY'];
     return new RsaStoreFile($rsaDirectory);
 }, true);
 $containerConfigurator->bind(AbstractAdapter::class, function () {
-    $cacheDirectory = FilePathHelper::rootPath() . '/' . $_ENV['CACHE_DIRECTORY'];
+    $cacheDirectory = $_ENV['CACHE_DIRECTORY'];
     return new FilesystemAdapter('cryptoSession', TimeEnum::SECOND_PER_DAY, $cacheDirectory);
 }, true);
 
