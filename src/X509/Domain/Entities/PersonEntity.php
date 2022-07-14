@@ -33,12 +33,12 @@ class PersonEntity
         $this->surname = $surname;
     }
 
-    public function getPatronymic(): string
+    public function getPatronymic(): ?string
     {
         return $this->patronymic;
     }
 
-    public function setPatronymic(string $patronymic): void
+    public function setPatronymic(?string $patronymic): void
     {
         $this->patronymic = $patronymic;
     }
