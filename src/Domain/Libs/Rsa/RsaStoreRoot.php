@@ -3,7 +3,7 @@
 namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
-use ZnDomain\Entity\Exceptions\NotFoundException;
+use ZnCore\Contract\Common\Exceptions\NotFoundException;
 
 
 class RsaStoreRoot extends BaseRsaStore implements RsaStoreInterface

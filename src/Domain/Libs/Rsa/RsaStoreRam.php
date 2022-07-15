@@ -2,7 +2,7 @@
 
 namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
-use ZnDomain\Entity\Exceptions\NotFoundException;
+use ZnCore\Contract\Common\Exceptions\NotFoundException;
 
 class RsaStoreRam implements RsaStoreInterface
 {
