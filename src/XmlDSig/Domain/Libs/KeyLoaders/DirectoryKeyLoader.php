@@ -7,7 +7,7 @@ use ZnCore\FileSystem\Helpers\FileStorageHelper;
 use ZnCore\FileSystem\Helpers\FindFileHelper;
 use ZnCore\Collection\Interfaces\Enumerable;
 use ZnCore\Collection\Libs\Collection;
-use ZnCore\Entity\Helpers\EntityHelper;
+use ZnDomain\Entity\Helpers\EntityHelper;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
 
 class DirectoryKeyLoader
