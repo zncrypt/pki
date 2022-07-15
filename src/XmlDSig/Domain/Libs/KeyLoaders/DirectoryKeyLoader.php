@@ -2,13 +2,14 @@
 
 namespace ZnCrypt\Pki\XmlDSig\Domain\Libs\KeyLoaders;
 
+use ZnCore\Code\Helpers\PropertyHelper;
+use ZnCore\Collection\Interfaces\Enumerable;
+use ZnCore\Collection\Libs\Collection;
 use ZnCore\FileSystem\Helpers\FileHelper;
 use ZnCore\FileSystem\Helpers\FileStorageHelper;
 use ZnCore\FileSystem\Helpers\FindFileHelper;
-use ZnCore\Collection\Interfaces\Enumerable;
-use ZnCore\Collection\Libs\Collection;
-use ZnDomain\Entity\Helpers\EntityHelper;
 use ZnCrypt\Pki\XmlDSig\Domain\Entities\KeyEntity;
+use ZnDomain\Entity\Helpers\EntityHelper;
 
 class DirectoryKeyLoader
 {
@@ -73,7 +74,7 @@ class DirectoryKeyLoader
         }
 
         $userKeyEntity = new KeyEntity;
-        EntityHelper::setAttributes($userKeyEntity, $data);
+        PropertyHelper::setAttributes($userKeyEntity, $data);
         $userKeyEntity->setName($name);
         return $userKeyEntity;
     }

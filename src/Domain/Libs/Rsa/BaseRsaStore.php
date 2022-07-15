@@ -2,14 +2,13 @@
 
 namespace ZnCrypt\Pki\Domain\Libs\Rsa;
 
+use ZnCore\Arr\Helpers\ArrayHelper;
+use ZnCore\Code\Helpers\PropertyHelper;
 use ZnCrypt\Pki\Domain\Entities\CertificateSubjectEntity;
 use ZnCrypt\Pki\Domain\Enums\CertificateFormatEnum;
 use ZnCrypt\Pki\Domain\Enums\RsaKeyFormatEnum;
-use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCrypt\Pki\Domain\Helpers\RsaKeyHelper;
 use ZnDomain\Entity\Helpers\EntityHelper;
-
-use ZnCore\Arr\Helpers\ArrayHelper;
 
 abstract class BaseRsaStore implements RsaStoreInterface
 {
@@ -23,11 +22,13 @@ abstract class BaseRsaStore implements RsaStoreInterface
     protected $p12 = null;
     protected $privateKeyPassword = null;
 
-    public function enableWrite() {
+    public function enableWrite()
+    {
         $this->readOnly = false;
     }
 
-    public function setSubject(CertificateSubjectEntity $subject) {
+    public function setSubject(CertificateSubjectEntity $subject)
+    {
         $array = EntityHelper::toArray($subject);
         $array = ArrayHelper::extractByKeys($array, [
             'type',
@@ -39,15 +40,17 @@ abstract class BaseRsaStore implements RsaStoreInterface
         $this->setContent(self::SUBJECT_FILE, $json);
     }
 
-    public function getSubject(): CertificateSubjectEntity {
+    public function getSubject(): CertificateSubjectEntity
+    {
         $json = $this->getContent(self::SUBJECT_FILE);
         $array = json_decode($json, true);
         $subject = new CertificateSubjectEntity;
-        EntityHelper::setAttributes($subject, $array);
+        PropertyHelper::setAttributes($subject, $array);
         return $subject;
     }
 
-    public function setCertificate(string $cert, string $format = CertificateFormatEnum::JSON) {
+    public function setCertificate(string $cert, string $format = CertificateFormatEnum::JSON)
+    {
         $this->setContent(self::CERTIFICATE_FILE, $cert);
     }
 
@@ -62,17 +65,18 @@ abstract class BaseRsaStore implements RsaStoreInterface
         return $key;
     }
 
-    public function setPublicKey(string $cert) {
+    public function setPublicKey(string $cert)
+    {
         $this->setContent(self::PUBLIC_KEY_FILE, $cert);
     }
 
     public function getPublicKey(string $format = RsaKeyFormatEnum::TEXT)
     {
         $key = $this->getContent(self::PUBLIC_KEY_FILE);
-        if($format == RsaKeyFormatEnum::BIN) {
+        if ($format == RsaKeyFormatEnum::BIN) {
             //$key = openssl_pkey_get_public($key);
             $key = RsaKeyHelper::pemToBin($key);
-        } elseif($format == RsaKeyFormatEnum::PEM) {
+        } elseif ($format == RsaKeyFormatEnum::PEM) {
             $key = RsaKeyHelper::base64ToPem($key, 'PUBLIC KEY');
         } else {
             $key = RsaKeyHelper::keyToLine($key);
@@ -80,17 +84,18 @@ abstract class BaseRsaStore implements RsaStoreInterface
         return $key;
     }
 
-    public function setPrivateKey(string $cert) {
+    public function setPrivateKey(string $cert)
+    {
         $this->setContent(self::PRIVATE_KEY_FILE, $cert);
     }
 
     public function getPrivateKey(string $format = RsaKeyFormatEnum::TEXT)
     {
         $key = $this->getContent(self::PRIVATE_KEY_FILE);
-        if($format == RsaKeyFormatEnum::BIN) {
+        if ($format == RsaKeyFormatEnum::BIN) {
             $key = RsaKeyHelper::pemToBin($key);
             //$ogp = openssl_get_privatekey($this->privateKey);
-        } elseif($format == RsaKeyFormatEnum::PEM) {
+        } elseif ($format == RsaKeyFormatEnum::PEM) {
             $key = RsaKeyHelper::base64ToPem($key, 'PRIVATE KEY');
             //dd($key);
         } else {
