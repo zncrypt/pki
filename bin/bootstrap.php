@@ -1,5 +1,6 @@
 <?php
 
+use ZnCore\Container\Interfaces\ContainerConfiguratorInterface;
 use ZnCore\Container\Libs\Container;
 use Symfony\Component\Console\Application;
 use ZnCore\Container\Helpers\ContainerHelper;
@@ -21,7 +22,9 @@ use ZnCore\FileSystem\Helpers\FileHelper;
 
 // --- Generator ---
 
-$containerConfigurator = ContainerHelper::getContainerConfiguratorByContainer($container);
+/** @var ContainerConfiguratorInterface $containerConfigurator */
+$containerConfigurator = $container->get(ContainerConfiguratorInterface::class);
+//$containerConfigurator = ContainerHelper::getContainerConfiguratorByContainer($container);
 $containerConfigurator->bind(RsaStoreFile::class, function () {
     $rsaDirectory = $_ENV['RSA_CA_DIRECTORY'];
     return new RsaStoreFile($rsaDirectory);
